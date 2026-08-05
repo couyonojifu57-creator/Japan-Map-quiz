@@ -89,6 +89,8 @@
   .hud-item.pop{animation:hudpop .35s ease;}
   @keyframes hudpop{0%{transform:scale(1);}45%{transform:scale(1.18);}100%{transform:scale(1);}}
   .hud-item.combo.hot{background:#FFF3E0;border-color:#F0A030;color:#D2673F;}
+  .hud-item.miss{color:#C7473F;}
+  .hud-item.miss.hit{background:#FDEAEA;border-color:#C7473F;}
   .soundbtn{flex:none;width:46px;border:1px solid var(--line);background:#fff;border-radius:14px;
     font-size:1.3rem;cursor:pointer;}
   .soundbtn[aria-pressed="false"]{opacity:.45;}
@@ -108,6 +110,39 @@
   .confetti i{position:absolute;top:-12px;width:9px;height:9px;border-radius:2px;opacity:.95;
     animation:fall 1.1s ease-in forwards;}
   @keyframes fall{to{transform:translateY(120%) rotate(720deg);opacity:0;}}
+
+  /* 全国制覇！花火（季節の演出） */
+  .fireworks{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden;
+    background:radial-gradient(ellipse at 50% 30%,rgba(10,10,40,0) 0%,rgba(8,8,30,0) 100%);}
+  .fireworks.show{background:radial-gradient(ellipse at 50% 20%,rgba(10,10,45,.05) 0%,rgba(5,5,25,.35) 100%);}
+  .fw-canvas{position:absolute;inset:0;overflow:hidden;}
+  .fw-shell{position:absolute;width:6px;height:6px;border-radius:50%;
+    box-shadow:0 0 6px 2px currentColor;animation:fwrise var(--dur,900ms) ease-out forwards;
+    left:var(--x);bottom:0;color:var(--c);}
+  @keyframes fwrise{0%{bottom:0;opacity:1;}
+    92%{opacity:1;}
+    100%{bottom:var(--peak);opacity:0;}}
+  .fw-burst{position:absolute;left:var(--x);top:var(--y);width:0;height:0;}
+  .fw-burst i{position:absolute;left:0;top:0;width:5px;height:5px;border-radius:50%;
+    background:var(--c);box-shadow:0 0 6px 1px var(--c);
+    animation:fwpop 1.15s cubic-bezier(.15,.7,.3,1) forwards;
+    transform:rotate(calc(var(--i)*1deg)) translateX(0);}
+  @keyframes fwpop{
+    0%{transform:rotate(calc(var(--i)*1deg)) translateX(0) scale(1);opacity:1;}
+    75%{opacity:1;}
+    100%{transform:rotate(calc(var(--i)*1deg)) translateX(var(--r)) scale(.4);opacity:0;}}
+  .fw-msg{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);text-align:center;
+    color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.6);opacity:0;}
+  .fireworks.show .fw-msg{animation:fwmsg 1s ease .3s forwards;}
+  .fw-msg .ttl{font-size:clamp(1.6rem,7vw,2.6rem);font-weight:900;letter-spacing:.04em;}
+  .fw-msg .sub{font-size:.95rem;font-weight:700;margin-top:6px;opacity:.9;}
+  @keyframes fwmsg{0%{opacity:0;transform:translate(-50%,-40%) scale(.8);}
+    100%{opacity:1;transform:translate(-50%,-50%) scale(1);}}
+  .fw-tapclose{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+    color:#fff;font-size:.8rem;font-weight:700;opacity:0;
+    background:rgba(255,255,255,.15);padding:8px 18px;border-radius:999px;pointer-events:none;
+    border:1px solid rgba(255,255,255,.4);cursor:pointer;}
+  .fireworks.show .fw-tapclose{animation:fwmsg 1s ease 1.4s forwards;pointer-events:auto;}
   .emoji{font-size:20px;text-anchor:middle;dominant-baseline:central;pointer-events:none;}
   .pname{font-size:13px;font-weight:800;text-anchor:middle;dominant-baseline:central;
     fill:#fff;paint-order:stroke;stroke:rgba(40,38,32,.85);stroke-width:3px;pointer-events:none;}
@@ -153,6 +188,45 @@
   .card .bigstars{font-size:1.6rem;letter-spacing:4px;margin:8px 0 14px;}
   .card .msg{color:var(--sub);margin-bottom:18px;}
 
+  /* サブナビ：コレクション・ショップ */
+  .subnav{display:flex;gap:8px;margin:10px 0 4px;flex-wrap:wrap;}
+  .panel{position:fixed;inset:0;background:rgba(42,38,32,.55);display:none;
+    align-items:center;justify-content:center;padding:16px;z-index:20;}
+  .panel.show{display:flex;}
+  .panelcard{background:var(--paper);border-radius:20px;padding:22px 20px;max-width:460px;width:100%;
+    max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px -20px rgba(0,0,0,.6);}
+  .panelcard h3{margin:0 0 4px;font-size:1.2rem;font-weight:800;}
+  .panelcard .sub{font-size:.8rem;color:var(--sub);margin-bottom:14px;}
+  .panelclose{float:right;border:none;background:#fff;border:1px solid var(--line);
+    border-radius:999px;width:32px;height:32px;font-size:1rem;cursor:pointer;font-weight:800;}
+  /* コレクション帳 */
+  .stampgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:6px;}
+  .stamp{aspect-ratio:1;border-radius:10px;display:flex;align-items:center;justify-content:center;
+    font-size:1.3rem;background:#fff;border:1.5px dashed var(--line);position:relative;}
+  .stamp.got{border-style:solid;border-color:#D8A93A;
+    background:linear-gradient(155deg,#FFFDF6,#FFE9B0);box-shadow:0 2px 6px rgba(150,100,10,.3);}
+  .stamp .pname{position:absolute;bottom:-2px;font-size:6px;font-weight:700;color:var(--sub);
+    left:0;right:0;text-align:center;}
+  .stamp.got .pname{color:#8A6A2A;}
+  .allclear{margin-top:14px;text-align:center;font-weight:900;color:#C48328;font-size:1rem;
+    background:#FFF3D6;border:2px solid #D8A93A;border-radius:12px;padding:10px;display:none;}
+  .allclear.show{display:block;}
+  /* テーマショップ */
+  .themelist{display:flex;flex-direction:column;gap:10px;margin-top:8px;}
+  .themecard{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);
+    border-radius:14px;padding:10px 12px;background:#fff;}
+  .themecard.active{border-color:#5C8F3A;background:#F3F9EE;}
+  .themecard .dots{display:flex;gap:4px;flex:none;}
+  .themecard .dots i{width:16px;height:16px;border-radius:50%;display:block;}
+  .themecard .info{flex:1;min-width:0;}
+  .themecard .info b{display:block;font-size:.92rem;}
+  .themecard .info span{font-size:.72rem;color:var(--sub);}
+  .themecard button{flex:none;border:none;border-radius:999px;font-weight:800;font-size:.78rem;
+    padding:7px 14px;cursor:pointer;}
+  .themecard button.buy{background:var(--ink);color:#fff;}
+  .themecard button.use{background:#5C8F3A;color:#fff;}
+  .themecard button.selected{background:#e7dfcd;color:var(--sub);cursor:default;}
+
   footer{margin-top:20px;font-size:.72rem;color:var(--sub);text-align:center;line-height:1.7;}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 </style>
@@ -165,6 +239,10 @@
   <div class="modes" role="tablist">
     <button id="mExplore" role="tab" aria-selected="true">まなぶ</button>
     <button id="mQuiz" role="tab" aria-selected="false">クイズ</button>
+  </div>
+  <div class="subnav">
+    <button class="btn ghost" id="openCollect">📖 コレクション <span id="collectCount">0/47</span></button>
+    <button class="btn ghost" id="openShop">🎨 テーマショップ</button>
   </div>
 
   <!-- まなぶ -->
@@ -182,11 +260,12 @@
       <div class="hud-item" id="hPointsWrap">⭐<span id="hPoints">0</span><small>ポイント</small></div>
       <div class="hud-item" id="hCoinsWrap">🪙<span id="hCoins">0</span><small>コイン</small></div>
       <div class="hud-item combo" id="hComboWrap">🔥<span id="hCombo">0</span><small>コンボ</small></div>
+      <div class="hud-item miss" id="hMissWrap">❌<span id="hMiss">0</span><small>ミス</small></div>
       <button class="soundbtn" id="soundBtn" aria-pressed="true" title="音のオン・オフ">🔊</button>
     </div>
     <div class="progress"><div class="bar" id="qBar"></div></div>
     <div class="quizbar">
-      <div class="top"><span id="qProg">もんだい 1 / 10</span><span>せいかい <span id="qScore">0</span></span></div>
+      <div class="top"><span id="qProg">もんだい 1 / 10</span><span>クリア <span id="qScore">0</span> ／ ノーミス <span id="qPerfect">0</span></span></div>
       <div class="q" id="qText">スタートをおしてね</div>
       <div class="answerrow">
         <input id="qInput" type="text" inputmode="text" autocomplete="off" autocapitalize="off"
@@ -229,12 +308,45 @@
 <div class="result" id="result">
   <div class="card">
     <div style="font-weight:800;color:var(--sub);">けっか はっぴょう</div>
-    <div class="score"><span id="rScore">0</span> / 10 せいかい</div>
+    <div class="score"><span id="rScore">0</span> / 10 クリア</div>
     <div class="bigstars" id="rStars"></div>
+    <div style="font-size:.95rem;font-weight:800;color:#5C8F3A;margin-bottom:2px;">ノーミス正解：<span id="rPerfect">0</span> / 10</div>
+    <div style="font-size:.95rem;font-weight:800;color:#C7473F;margin-bottom:8px;">まちがえた回数：<span id="rMiss">0</span> 回</div>
     <div style="font-size:1.1rem;font-weight:900;margin-bottom:4px;">⭐ <span id="rPoints">0</span> ポイント　🪙 <span id="rCoins">0</span> コイン</div>
     <div class="msg" id="rMsg"></div>
     <div style="font-size:.8rem;color:var(--sub);margin-bottom:12px;">これまでの さいこう記録：<b id="rBest">0</b> ポイント</div>
     <button class="btn dark" id="rAgain" style="font-size:1rem;padding:10px 28px;">もういちど！</button>
+  </div>
+</div>
+
+<!-- コレクション帳 -->
+<div class="panel" id="collectPanel">
+  <div class="panelcard">
+    <button class="panelclose" id="closeCollect">✕</button>
+    <h3>📖 物件コレクション</h3>
+    <p class="sub">クイズで正解すると、その県のスタンプが手に入るよ（<span id="collectCount2">0/47</span>）</p>
+    <div class="stampgrid" id="stampGrid"></div>
+    <div class="allclear" id="allClear">🏆 全国制覇！ 47都道府県ぜんぶ GET！</div>
+  </div>
+</div>
+
+<!-- 全国制覇！花火 -->
+<div class="fireworks" id="fireworks">
+  <div class="fw-canvas" id="fwCanvas"></div>
+  <div class="fw-msg" id="fwMsg">
+    <div class="ttl">🎆 全国せいは！ 🎆</div>
+    <div class="sub">47都道府県ぜんぶ あつめたよ！</div>
+  </div>
+  <button class="fw-tapclose" id="fwClose">タップでとじる</button>
+</div>
+
+<!-- テーマショップ -->
+<div class="panel" id="shopPanel">
+  <div class="panelcard">
+    <button class="panelclose" id="closeShop">✕</button>
+    <h3>🎨 テーマショップ</h3>
+    <p class="sub">コインで地図の色をかえられるよ　所持コイン：🪙<span id="shopCoins">0</span></p>
+    <div class="themelist" id="themeList"></div>
   </div>
 </div>
 
@@ -331,10 +443,11 @@ let namesOn=true;
 nameToggle.onclick=()=>{namesOn=!namesOn;document.body.classList.toggle("names-off",!namesOn);
   nameToggle.setAttribute("aria-pressed",String(namesOn));
   nameState.textContent=namesOn?"見えてます":"かくれてます";applyLabels();};
-const legend=document.getElementById("legend");let active=null;
+const legend=document.getElementById("legend");let active=null;const legendDots={};
 Object.entries(DATA.regions).forEach(([key,r])=>{const btn=document.createElement("button");
   btn.setAttribute("aria-pressed","false");
   btn.innerHTML=`<span class="dot" style="background:${r[1]}"></span>${r[0]}`;
+  legendDots[key]=btn.querySelector(".dot");
   btn.onclick=()=>{if(active===key){active=null;btn.setAttribute("aria-pressed","false");}
     else{active=key;legend.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed","false"));
       btn.setAttribute("aria-pressed","true");}
@@ -355,13 +468,16 @@ const qInput=document.getElementById("qInput");
 const hPoints=document.getElementById("hPoints"),hCoins=document.getElementById("hCoins"),
   hCombo=document.getElementById("hCombo"),hComboWrap=document.getElementById("hComboWrap"),
   hPointsWrap=document.getElementById("hPointsWrap"),hCoinsWrap=document.getElementById("hCoinsWrap"),
+  hMiss=document.getElementById("hMiss"),hMissWrap=document.getElementById("hMissWrap"),
+  qPerfect=document.getElementById("qPerfect"),
   qBar=document.getElementById("qBar");
-let points=0,coins=0,combo=0,best=0;
+let points=0,coins=0,combo=0,best=0,totalMiss=0,perfectCount=0;
 function load(k,d){try{const v=localStorage.getItem(k);return v==null?d:v;}catch(e){return d;}}
 function save(k,v){try{localStorage.setItem(k,v);}catch(e){}}
 coins=parseInt(load("jp_coins","0"))||0;
 best=parseInt(load("jp_best","0"))||0;
 function updHUD(){hPoints.textContent=points;hCoins.textContent=coins;hCombo.textContent=combo;
+  hMiss.textContent=totalMiss;qPerfect.textContent=perfectCount;
   hComboWrap.classList.toggle("hot",combo>=3);}
 function bump(el){el.classList.remove("pop");void el.offsetWidth;el.classList.add("pop");}
 // サウンド（Web Audio・ファイル不要）
@@ -395,7 +511,8 @@ updHUD();
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
 function startQuiz(){
   quiz=shuffle(DATA.prefs.slice()).slice(0,N).map(p=>({p}));
-  qi=0;score=0;stars=0;points=0;combo=0;qScore.textContent="0";qStars.textContent="";
+  qi=0;score=0;stars=0;points=0;combo=0;totalMiss=0;perfectCount=0;
+  qScore.textContent="0";qStars.textContent="";
   updHUD();qBar.style.width="0%";
   document.getElementById("result").classList.remove("show");
   clearMarks();showQuestion();
@@ -438,7 +555,8 @@ function checkAnswer(){
     points+=gain;
     const coinGain=wrongThis===0?3:1;coins+=coinGain;
     score++;qScore.textContent=score;
-    if(wrongThis===0)stars++;
+    if(wrongThis===0){stars++;perfectCount++;}
+    obtainStamp(p.id);
     updHUD();bump(hPointsWrap);bump(hCoinsWrap);if(combo>=2)bump(hComboWrap);
     save("jp_coins",coins);
     showFloat("+"+gain);confetti();sCorrect();sCoin();
@@ -446,7 +564,7 @@ function checkAnswer(){
     qFb.innerHTML=`🏆 <ruby>${p.spec}<rt>${p.specyomi}</rt></ruby>物件、GET！　<ruby>${p.ja}<rt>${fullReading(p)}</rt></ruby>でした${combomsg}`;qFb.className="feedback ok";
     setTimeout(next,1300);
   }else{
-    wrongThis++;combo=0;updHUD();sWrong();
+    wrongThis++;totalMiss++;combo=0;updHUD();bump(hMissWrap);sWrong();
     qFb.textContent=wrongThis>=2?`おしい！「${p.yomi[0]}」ではじまるよ`:"ちがうよ、もういちど！";
     qFb.className="feedback ng";
     qInput.select();
@@ -464,10 +582,12 @@ function finish(){
   document.getElementById("rBest").textContent=best;
   const full=Math.round(stars);
   document.getElementById("rStars").textContent="⭐".repeat(full)+"・".repeat(N-full);
+  document.getElementById("rMiss").textContent=totalMiss;
+  document.getElementById("rPerfect").textContent=perfectCount;
   let msg;
-  if(score===N)msg="ぜんもんせいかい！てんさい！";
-  else if(score>=8)msg="すごい！よくできました！";
-  else if(score>=5)msg="いいちょうし！もういちどやってみよう！";
+  if(totalMiss===0)msg="ぜんもんノーミス！かんぺき！てんさい！";
+  else if(perfectCount>=8)msg="すごい！よくできました！";
+  else if(perfectCount>=5)msg="いいちょうし！もういちどやってみよう！";
   else msg="ナイスチャレンジ！くりかえせばおぼえられるよ！";
   document.getElementById("rMsg").textContent=msg;
   document.getElementById("result").classList.add("show");
@@ -485,6 +605,168 @@ function showMark(p,ch,color){mark.textContent=ch;mark.setAttribute("x",p.cx);
 function clearMarks(){mark.classList.remove("show");
   Object.values(groups).forEach(g=>{g.classList.remove("correct","wrong","pulse","faded","target");
     if(mode==="quiz")g._em.style.display="none";});}
+
+/* ===== コレクション（スタンプ帳） ===== */
+let obtained=new Set(JSON.parse(load("jp_obtained","[]")));
+function obtainStamp(id){
+  if(obtained.has(id))return;
+  obtained.add(id);save("jp_obtained",JSON.stringify([...obtained]));
+  renderCollectCount();
+  if(obtained.size===47)setTimeout(celebrateComplete,600);
+}
+function renderCollectCount(){
+  const n=obtained.size;
+  document.getElementById("collectCount").textContent=n+"/47";
+  document.getElementById("collectCount2").textContent=n+"/47";
+}
+function renderStampGrid(){
+  const grid=document.getElementById("stampGrid");grid.innerHTML="";
+  DATA.prefs.slice().sort((a,b)=>a.id-b.id).forEach(p=>{
+    const s=document.createElement("div");
+    const got=obtained.has(p.id);
+    s.className="stamp"+(got?" got":"");
+    s.innerHTML=`<span>${got?p.emoji:"？"}</span><span class="pname">${got?(p.ja==="北海道"?"北海道":p.ja.replace(/[県都府]$/,"")):""}</span>`;
+    s.title=got?`${p.ja}：${p.spec}`:"まだ";
+    grid.appendChild(s);
+  });
+  document.getElementById("allClear").classList.toggle("show",obtained.size>=47);
+}
+document.getElementById("openCollect").onclick=()=>{renderStampGrid();renderCollectCount();
+  document.getElementById("collectPanel").classList.add("show");};
+document.getElementById("closeCollect").onclick=()=>document.getElementById("collectPanel").classList.remove("show");
+renderCollectCount();
+
+/* ===== 全国制覇！季節の花火演出 ===== */
+function seasonInfo(){
+  const m=new Date().getMonth()+1; // 1-12
+  if(m>=6&&m<=9)return{key:"summer",emoji:"🎆",title:"🎆 全国せいは！ 🎆",sub:"47都道府県ぜんぶ あつめたよ！なつだ、はなびだ！",
+    colors:["#FF6B6B","#FFD93D","#6BCBFF","#8CFF9B","#FF9DE2","#FFFFFF"]};
+  if(m>=10&&m<=11)return{key:"autumn",emoji:"🍁",title:"🍁 全国せいは！ 🍁",sub:"47都道府県ぜんぶ あつめたよ！",
+    colors:["#E4572E","#F0A030","#C7473F","#FFD34E","#8C5A2E"]};
+  if(m===12||m<=2)return{key:"winter",emoji:"❄️",title:"❄️ 全国せいは！ ❄️",sub:"47都道府県ぜんぶ あつめたよ！",
+    colors:["#8FC4E8","#FFFFFF","#B8E0F5","#5E7CE2","#D8ECFA"]};
+  return{key:"spring",emoji:"🌸",title:"🌸 全国せいは！ 🌸",sub:"47都道府県ぜんぶ あつめたよ！",
+    colors:["#FFB7C5","#FF8FA3","#FFFFFF","#FFD34E","#8CFF9B"]};
+}
+let fwTimer=null;
+function launchShell(container,x,colors){
+  const shell=document.createElement("div");
+  shell.className="fw-shell";
+  const c=colors[Math.floor(Math.random()*colors.length)];
+  const peak=30+Math.random()*40; // vh 相当(%)
+  shell.style.setProperty("--x",x+"%");
+  shell.style.setProperty("--peak",peak+"vh");
+  shell.style.setProperty("--dur",(700+Math.random()*500)+"ms");
+  shell.style.color=c;
+  container.appendChild(shell);
+  const dur=parseFloat(shell.style.getPropertyValue("--dur"));
+  setTimeout(()=>{
+    shell.remove();
+    burst(container,x,100-peak,c);
+  },dur);
+}
+function burst(container,xPct,yPct,color){
+  const b=document.createElement("div");
+  b.className="fw-burst";
+  b.style.setProperty("--x",xPct+"%");
+  b.style.setProperty("--y",yPct+"vh");
+  const n=22+Math.floor(Math.random()*10);
+  for(let i=0;i<n;i++){
+    const p=document.createElement("i");
+    const ang=(360/n)*i;
+    const dist=40+Math.random()*70;
+    p.style.setProperty("--i",ang);
+    p.style.setProperty("--r",dist+"px");
+    p.style.setProperty("--c",color);
+    b.appendChild(p);
+  }
+  container.appendChild(b);
+  setTimeout(()=>b.remove(),1300);
+}
+function celebrateComplete(){
+  const info=seasonInfo();
+  const fw=document.getElementById("fireworks");
+  const canvas=document.getElementById("fwCanvas");
+  document.getElementById("fwMsg").querySelector(".ttl").textContent=info.title;
+  document.getElementById("fwMsg").querySelector(".sub").textContent=info.sub;
+  fw.classList.add("show");
+  sFinish();
+  let count=0;
+  function wave(){
+    for(let i=0;i<3;i++)launchShell(canvas,15+Math.random()*70,info.colors);
+    count++;
+    if(count<9)fwTimer=setTimeout(wave,450);
+  }
+  wave();
+}
+document.getElementById("fwClose").onclick=()=>{
+  document.getElementById("fireworks").classList.remove("show");
+  document.getElementById("fwCanvas").innerHTML="";
+  clearTimeout(fwTimer);
+};
+
+
+/* ===== テーマショップ ===== */
+const THEMES=[
+  {id:"wa",name:"わふう（さいしょから）",cost:0,sea:"#CFE0E6",
+   colors:{hok:"#26466B",toh:"#2E6088",kan:"#2F7D57",chu:"#C48328",kin:"#B23A44",chg:"#6B4C86",shi:"#5C8F3A",kyu:"#D2673F"}},
+  {id:"pop",name:"ポップキャンディ",cost:30,sea:"#E9F3FF",
+   colors:{hok:"#3C7BD9",toh:"#3FB6E0",kan:"#3FC98A",chu:"#FFB43C",kin:"#FF5D7A",chg:"#B370E0",shi:"#8FD14F",kyu:"#FF8A3C"}},
+  {id:"space",name:"うちゅう",cost:60,sea:"#1B1B3A",
+   colors:{hok:"#5E7CE2",toh:"#4FA9E0",kan:"#3FDCA8",chu:"#F2C14E",kin:"#FF5D8F",chg:"#B77CF2",shi:"#5EE0A0",kyu:"#FF8A6B"}},
+  {id:"retro",name:"レトロしょうわ",cost:60,sea:"#EFE6D2",
+   colors:{hok:"#7A5230",toh:"#8C6A3E",kan:"#6E7A3E",chu:"#C77A2E",kin:"#A63D3D",chg:"#6E4A6E",shi:"#7A8C3E",kyu:"#C2622E"}},
+];
+let ownedThemes=new Set(JSON.parse(load("jp_owned_themes",JSON.stringify(["wa"]))));
+let curTheme=load("jp_theme","wa");
+function applyTheme(id){
+  const th=THEMES.find(t=>t.id===id);if(!th)return;
+  curTheme=id;save("jp_theme",id);
+  Object.keys(DATA.regions).forEach(key=>{DATA.regions[key][1]=th.colors[key];});
+  Object.values(groups).forEach(g=>{
+    const p=byId[g.dataset.id];
+    g.querySelector("path").setAttribute("fill",DATA.regions[p.reg][1]);
+  });
+  Object.entries(legendDots).forEach(([key,dot])=>{dot.style.background=DATA.regions[key][1];});
+  document.documentElement.style.setProperty("--sea",th.sea);
+  const cur=byId[Number(document.querySelector(".pref.sel")?.dataset.id)||38];
+  if(cur)select(cur);
+}
+function renderThemeShop(){
+  document.getElementById("shopCoins").textContent=coins;
+  const list=document.getElementById("themeList");list.innerHTML="";
+  THEMES.forEach(th=>{
+    const owned=ownedThemes.has(th.id);
+    const isActive=curTheme===th.id;
+    const card=document.createElement("div");
+    card.className="themecard"+(isActive?" active":"");
+    const dots=Object.values(th.colors).slice(0,5).map(c=>`<i style="background:${c}"></i>`).join("");
+    let btnHtml;
+    if(isActive)btnHtml=`<button class="selected" disabled>つかってる</button>`;
+    else if(owned)btnHtml=`<button class="use">つかう</button>`;
+    else btnHtml=`<button class="buy">🪙${th.cost}</button>`;
+    card.innerHTML=`<span class="dots">${dots}</span>
+      <span class="info"><b>${th.name}</b><span>${owned?"かいました":"みかいふう"}</span></span>${btnHtml}`;
+    const btn=card.querySelector("button");
+    if(!isActive){
+      btn.onclick=()=>{
+        if(!owned){
+          if(coins<th.cost){qFbFlash(card);return;}
+          coins-=th.cost;ownedThemes.add(th.id);
+          save("jp_owned_themes",JSON.stringify([...ownedThemes]));save("jp_coins",coins);
+          updHUD();sCoin();
+        }
+        applyTheme(th.id);renderThemeShop();
+      };
+    }
+    list.appendChild(card);
+  });
+}
+function qFbFlash(el){el.style.animation="none";void el.offsetWidth;el.style.animation="hudpop .3s ease";}
+document.getElementById("openShop").onclick=()=>{renderThemeShop();document.getElementById("shopPanel").classList.add("show");};
+document.getElementById("closeShop").onclick=()=>document.getElementById("shopPanel").classList.remove("show");
+applyTheme(curTheme);
+
 </script>
 </body>
 </html>
