@@ -510,7 +510,11 @@ function showFloat(txt){floatpts.textContent=txt;floatpts.classList.remove("go")
 updHUD();
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
 function startQuiz(){
-  quiz=shuffle(DATA.prefs.slice()).slice(0,N).map(p=>({p}));
+  // まだスタンプを持っていない県を優先的に出題（それでも足りない分は持っている県からランダムに補充）
+  const notYet=shuffle(DATA.prefs.filter(p=>!obtained.has(p.id)));
+  const already=shuffle(DATA.prefs.filter(p=>obtained.has(p.id)));
+  const picked=notYet.slice(0,N).concat(already).slice(0,N);
+  quiz=shuffle(picked).map(p=>({p}));
   qi=0;score=0;stars=0;points=0;combo=0;totalMiss=0;perfectCount=0;
   qScore.textContent="0";qStars.textContent="";
   updHUD();qBar.style.width="0%";
