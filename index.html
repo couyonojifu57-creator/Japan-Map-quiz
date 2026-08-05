@@ -269,7 +269,7 @@
       <div class="q" id="qText">スタートをおしてね</div>
       <div class="answerrow">
         <input id="qInput" type="text" inputmode="text" autocomplete="off" autocapitalize="off"
-               spellcheck="false" placeholder="県名を ひらがな か 漢字で" />
+               autocorrect="off" spellcheck="false" placeholder="県名を ひらがな か 漢字で" />
         <button class="btn dark" id="qGo">こたえる</button>
       </div>
       <div class="feedback" id="qFb"></div>
@@ -522,7 +522,7 @@ function startQuiz(){
   clearMarks();showQuestion();
 }
 // カタカナ→ひらがな、空白除去で正規化
-function norm(s){return (s||"").trim().replace(/\s/g,"")
+function norm(s){return (s||"").trim().replace(/[\s\u3000\u200B-\u200D\uFEFF]/g,"")
   .replace(/[ァ-ヶ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60));}
 // 正解として受け付ける表記の集合（漢字・ひらがな、県あり/なし）
 function accepted(p){
@@ -575,7 +575,14 @@ function checkAnswer(){
   }
 }
 document.getElementById("qGo").onclick=checkAnswer;
-qInput.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();checkAnswer();}});
+let composing=false;
+qInput.addEventListener("compositionstart",()=>{composing=true;});
+qInput.addEventListener("compositionend",()=>{composing=false;});
+qInput.addEventListener("keydown",e=>{
+  if(e.key!=="Enter")return;
+  if(composing||e.isComposing||e.keyCode===229)return; // 漢字変換確定のEnterは無視
+  e.preventDefault();checkAnswer();
+});
 function next(){qi++;if(qi>=N)finish();else showQuestion();}
 function finish(){
   qBar.style.width="100%";
