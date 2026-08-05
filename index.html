@@ -343,7 +343,10 @@
     <h3>📖 名産コレクション</h3>
     <p class="sub">クイズで正解すると、その県のスタンプが手に入るよ（<span id="collectCount2">0/47</span>）</p>
     <div class="stampgrid" id="stampGrid"></div>
-    <div class="allclear" id="allClear">🏆 全国制覇！ 47都道府県ぜんぶ GET！</div>
+    <div class="allclear" id="allClear">
+      🏆 全国制覇！ 47都道府県ぜんぶ GET！
+      <button class="btn dark" id="resetCollect" style="display:block;margin:10px auto 0;">🔄 クリアしてもう一度あつめる</button>
+    </div>
   </div>
 </div>
 
@@ -662,6 +665,11 @@ function renderStampGrid(){
 document.getElementById("openCollect").onclick=()=>{renderStampGrid();renderCollectCount();
   document.getElementById("collectPanel").classList.add("show");};
 document.getElementById("closeCollect").onclick=()=>document.getElementById("collectPanel").classList.remove("show");
+document.getElementById("resetCollect").onclick=()=>{
+  if(!confirm("コレクションを ぜんぶ クリアして、さいしょから あつめなおす？"))return;
+  obtained.clear();save("jp_obtained","[]");
+  renderStampGrid();renderCollectCount();
+};
 renderCollectCount();
 
 /* ===== 全国制覇！季節の花火演出 ===== */
