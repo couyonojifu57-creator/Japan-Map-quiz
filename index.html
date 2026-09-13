@@ -119,7 +119,7 @@
   .btns button{font-family:inherit;font-weight:800;font-size:.9rem;border-radius:14px;cursor:pointer;border:2px solid transparent;padding:10px 14px;transition:.15s;}
   .answer{flex:1;background:var(--accent);color:#fff;}.answer:hover{background:var(--accent-d);}
   .ghost{background:#fff;border-color:var(--line);color:var(--soft);}.ghost:hover{border-color:var(--accent);color:var(--accent-d);}
-  .next{flex:1;background:var(--ok);color:#0f5b2a;}.next:hover{background:#37a95a;}
+  .next{flex:1;background:var(--ok);color:#fff;font-weight:900;}.next:hover{background:#37a95a;}
   .summary{text-align:center;}.summary h2{margin:0 0 4px;font-size:1.3rem;font-weight:900;}
   .big{font-size:2.2rem;font-weight:900;color:var(--accent);margin:4px 0;}
   .miss{text-align:left;margin:12px auto 0;max-width:400px;}.miss .mt{font-weight:800;font-size:.82rem;color:var(--soft);margin-bottom:6px;}
@@ -130,6 +130,37 @@
   .note{text-align:center;color:var(--soft);font-size:.7rem;margin-top:14px;}
   @media(prefers-reduced-motion:reduce){.jp-map g.is-target{animation:none;}.mic.rec{animation:none;}#pills .pill .pi{transition:none;}}
 ruby{ruby-align:center;}rt{font-size:.55em;font-weight:700;opacity:.82;user-select:none;letter-spacing:0;}
+
+/* ふりがな 位置調整 */
+ruby{ruby-position:over;ruby-align:center;}
+rt{font-size:.5em;font-weight:600;opacity:.72;line-height:1;letter-spacing:-.01em;}
+.filters button{display:inline-flex;align-items:center;justify-content:center;line-height:1.12;padding:7px 13px 6px;}.filters ruby{line-height:1;}
+.modes button{line-height:1.4;}
+/* 光っている県の目印 */
+#marker{pointer-events:none;}
+#marker .ring{fill:none;stroke:#ff3b5c;stroke-width:4;transform-box:fill-box;transform-origin:center;}
+#marker .r1{animation:mkpulse 1.4s ease-out infinite;}
+#marker .r2{animation:mkpulse 1.4s ease-out .7s infinite;}
+@keyframes mkpulse{0%{transform:scale(.6);opacity:.95}100%{transform:scale(2.6);opacity:0}}
+#marker .pin{font-size:34px;text-anchor:middle;transform-box:fill-box;transform-origin:center bottom;animation:mkbounce 1s ease-in-out infinite;}
+@keyframes mkbounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+body.mode-study #marker{display:none!important;}
+/* ポイント */
+.ptsbar{text-align:center;font-weight:800;color:#c77b1f;font-size:.92rem;margin:0 0 8px;}
+.ptsbar #pts{color:#e08a12;font-size:1.05rem;}
+/* テーマ */
+.themecard .tt{font-weight:800;font-size:.92rem;margin-bottom:9px;text-align:center;}
+.themes{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+.themes button{font-family:inherit;font-weight:800;font-size:.8rem;border:2px solid var(--line);background:#fff;border-radius:13px;padding:7px 11px;cursor:pointer;display:flex;align-items:center;gap:7px;}
+.themes button .sw{width:16px;height:16px;border-radius:5px;border:2px solid;display:inline-block;}
+.themes button.on{border-color:var(--accent);box-shadow:0 0 0 3px rgba(47,155,214,.22);}
+.themes button.locked{opacity:.5;cursor:not-allowed;}
+.themes button .need{font-size:.72rem;color:var(--soft);}
+/* 花火・トースト */
+#fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;display:none;}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(18px);background:#243444;color:#fff;font-weight:800;font-size:.86rem;padding:10px 16px;border-radius:999px;opacity:0;transition:.25s;z-index:10000;pointer-events:none;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+@media(prefers-reduced-motion:reduce){#marker .ring,#marker .pin{animation:none;}}
 </style>
 </head>
 <body class="mode-study">
@@ -138,6 +169,7 @@ ruby{ruby-align:center;}rt{font-size:.55em;font-weight:700;opacity:.82;user-sele
     <p class="kicker"><ruby>都道府県<rt>とどうふけん</rt></ruby>マスター</p>
     <h1><ruby>日本地図<rt>にほんちず</rt></ruby> <span class="em"><ruby>学<rt>まな</rt></ruby>ぶ＆クイズ</span></h1>
   </header>
+  <div class="ptsbar">⭐ <span id="pts">0</span> ポイント</div>
 
   <div class="modes">
     <button id="mStudy" class="on">📖 <ruby>学<rt>まな</rt></ruby>ぶ</button>
@@ -177,13 +209,13 @@ ruby{ruby-align:center;}rt{font-size:.55em;font-weight:700;opacity:.82;user-sele
         <polygon points="27 848 24 842 29 840 30 844"/>
         <polygon points="4 868 6 865 7 867 2 875 0 874"/>
         <polygon points="12 864 9 861 14 861"/>
-        <polygon points="284 149 280 150 279 146 289 144"/>
-        <polygon points="301 126 301 118 306 118 305 122 309 126 308 129 303 132 300 128"/>
-        <polygon points="363 98 360 99 359 97 365 93"/>
-        <polygon points="344 90 331 98 335 101 330 104 327 103 329 107 323 102 325 99 316 97 324 97 325 95 321 94 335 88 337 90 339 86 344 85 342 89 344 87 345 89 347 82 349 88"/>
-        <polygon points="324 108 322 106 320 108 318 101 323 102 322 105 328 107 325 109 326 107"/>
-        <polygon points="355 12 352 16 352 13"/>
-        <polygon points="361 1 363 0 365 4"/>
+        
+        
+        
+        
+        
+        
+        
       </g>
       <g class="miyazaki kyushu kyushu-okinawa prefecture" data-code="45" stroke-linejoin="round" fill="#EEEEEE" fill-rule="nonzero" stroke="#000000" stroke-width="1.0" transform="translate(152.000000, 824.000000)">
         
@@ -366,12 +398,10 @@ ruby{ruby-align:center;}rt{font-size:.55em;font-weight:700;opacity:.82;user-sele
         <path d="M4,240 L3,245 L0,246 L0,237 L6,235 L4,240 Z M33,261 L32,250 L28,243 L23,242 L21,237 L17,236 L15,231 L19,223 L17,212 L19,209 L28,207 L34,198 L37,202 L39,201 L43,192 L49,187 L39,173 L40,166 L47,164 L60,174 L71,171 L71,174 L78,177 L83,174 L89,165 L83,140 L86,135 L93,132 L97,126 L96,103 L100,95 L101,85 L98,67 L90,48 L93,39 L92,33 L94,36 L99,35 L105,28 L131,55 L139,68 L155,85 L184,104 L213,109 L214,113 L219,118 L238,118 L260,91 L262,96 L252,119 L252,129 L255,135 L265,138 L263,140 L264,137 L258,137 L263,149 L269,156 L273,157 L280,149 L287,148 L277,156 L275,163 L258,166 L256,172 L252,177 L247,177 L245,175 L246,173 L243,172 L240,178 L243,180 L228,181 L220,178 L205,186 L191,202 L182,216 L179,225 L180,240 L178,248 L164,237 L141,228 L113,211 L100,209 L103,206 L88,214 L72,230 L69,227 L73,227 L68,226 L66,220 L58,212 L47,213 L42,220 L39,230 L40,234 L52,242 L62,242 L71,254 L80,257 L82,260 L76,265 L72,267 L63,263 L60,265 L60,261 L57,260 L55,265 L48,269 L48,278 L40,282 L37,287 L30,284 L27,278 L28,269 L33,261 Z M71,48 L73,45 L77,47 L79,52 L75,55 L71,52 L71,48 Z M65,35 L65,33 L67,35 L66,45 L63,35 L65,35 Z M369,17 L367,13 L365,13 L363,17 L365,23 L364,26 L359,28 L357,35 L350,34 L351,41 L341,50 L341,54 L335,54 L335,56 L339,58 L339,62 L336,65 L332,64 L332,69 L329,66 L330,71 L327,78 L331,79 L336,70 L341,69 L346,59 L356,50 L358,40 L363,43 L369,41 L384,24 L397,15 L406,13 L407,10 L404,6 L407,2 L402,0 L396,2 L384,20 L373,22 L369,17 Z M290,99 L295,93 L303,91 L308,84 L311,85 L314,79 L304,82 L296,77 L293,79 L289,89 L280,104 L280,107 L266,122 L268,129 L273,128 L273,132 L274,119 L282,114 L283,109 L286,109 L287,102 L290,99 Z M322,125 L334,115 L329,113 L325,116 L326,117 L319,119 L319,123 L321,122 L322,125 Z M300,142 L304,137 L297,139 L300,142 Z M291,146 L293,143 L289,144 L291,146 Z"/>
       </g>
     </g>
-    <g class="boundary-line" stroke="#EEEEEE" stroke-width="12" stroke-linejoin="round" style="">
-      <line x1="320.227" y1="361.996" x2="582.351" y2="109.378" style=""/>
-      <line x1="277.337" y1="380.162" x2="46.213" y2="380.162" style=""/>
-    </g>
+    
   </g>
-      <g id="pills"></g>
+      <g id="okiFrame"><rect x="203" y="889" width="228" height="106" rx="12" fill="none" stroke="#93a7ba" stroke-width="2" stroke-dasharray="7 5"/><text x="426" y="884" text-anchor="end" font-size="12" font-weight="700" fill="#6b7f92">ほんとうは もっと みなみ</text></g>
+<g id="pills"></g>
     </svg>
     <div class="maphint" id="maphint">ドラッグで<ruby>移動<rt>いどう</rt></ruby>・つまんで<ruby>拡大<rt>かくだい</rt></ruby>・<ruby>県<rt>けん</rt></ruby>をタップ</div>
   </div>
@@ -408,17 +438,21 @@ ruby{ruby-align:center;}rt{font-size:.55em;font-weight:700;opacity:.82;user-sele
     <div class="sumbtns"><button class="answer" id="again"><ruby>最初<rt>さいしょ</rt></ruby>から</button><button class="ghost" id="onlymiss" hidden>まちがえた<ruby>県<rt>けん</rt></ruby>だけ</button></div>
   </div>
 
+  <div class="card themecard"><div class="tt">🎨 マップの<ruby>色<rt>いろ</rt></ruby>（ポイントでふえる）</div><div class="themes" id="themes"></div></div>
   <p class="note">音声は Chrome / Safari 対応（プレビューでマイクが出ないときはダウンロードして開いてね）。地図データ © Geolonia（MIT）／ 都道府県は全 47。</p>
 </div>
 
+<canvas id="fx"></canvas><div id="toast" class="toast"></div>
 <script>
-const DATA=[{"c": 1, "k": "北海道", "y": "ほっかいどう", "r": "hokkaido", "g": "ht", "m": "かに・じゃがいも", "e": "🦀"}, {"c": 2, "k": "青森", "y": "あおもり", "r": "aomori", "g": "ht", "m": "りんご", "e": "🍎"}, {"c": 3, "k": "岩手", "y": "いわて", "r": "iwate", "g": "ht", "m": "南部鉄器・わんこそば", "e": "🫖"}, {"c": 4, "k": "宮城", "y": "みやぎ", "r": "miyagi", "g": "ht", "m": "牛タン", "e": "🐮"}, {"c": 5, "k": "秋田", "y": "あきた", "r": "akita", "g": "ht", "m": "きりたんぽ・秋田犬", "e": "🐕"}, {"c": 6, "k": "山形", "y": "やまがた", "r": "yamagata", "g": "ht", "m": "さくらんぼ", "e": "🍒"}, {"c": 7, "k": "福島", "y": "ふくしま", "r": "fukushima", "g": "ht", "m": "もも", "e": "🍑"}, {"c": 8, "k": "茨城", "y": "いばらき", "r": "ibaraki", "g": "kt", "m": "メロン・納豆", "e": "🍈"}, {"c": 9, "k": "栃木", "y": "とちぎ", "r": "tochigi", "g": "kt", "m": "いちご", "e": "🍓"}, {"c": 10, "k": "群馬", "y": "ぐんま", "r": "gunma", "g": "kt", "m": "こんにゃく・キャベツ", "e": "🥬"}, {"c": 11, "k": "埼玉", "y": "さいたま", "r": "saitama", "g": "kt", "m": "草加せんべい", "e": "🍘"}, {"c": 12, "k": "千葉", "y": "ちば", "r": "chiba", "g": "kt", "m": "落花生", "e": "🥜"}, {"c": 13, "k": "東京", "y": "とうきょう", "r": "tokyo", "g": "kt", "m": "東京タワー", "e": "🗼"}, {"c": 14, "k": "神奈川", "y": "かながわ", "r": "kanagawa", "g": "kt", "m": "鎌倉大仏・シウマイ", "e": "🗿"}, {"c": 15, "k": "新潟", "y": "にいがた", "r": "niigata", "g": "cb", "m": "コシヒカリ・日本酒", "e": "🌾"}, {"c": 16, "k": "富山", "y": "とやま", "r": "toyama", "g": "cb", "m": "ホタルイカ・ます寿司", "e": "🦑"}, {"c": 17, "k": "石川", "y": "いしかわ", "r": "ishikawa", "g": "cb", "m": "金沢金箔・輪島塗", "e": "✨"}, {"c": 18, "k": "福井", "y": "ふくい", "r": "fukui", "g": "cb", "m": "恐竜・越前がに", "e": "🦕"}, {"c": 19, "k": "山梨", "y": "やまなし", "r": "yamanashi", "g": "cb", "m": "ぶどう・ワイン", "e": "🍇"}, {"c": 20, "k": "長野", "y": "ながの", "r": "nagano", "g": "cb", "m": "そば・りんご", "e": "🏔️"}, {"c": 21, "k": "岐阜", "y": "ぎふ", "r": "gifu", "g": "cb", "m": "白川郷・飛騨牛", "e": "🏠"}, {"c": 22, "k": "静岡", "y": "しずおか", "r": "shizuoka", "g": "cb", "m": "お茶・みかん", "e": "🍵"}, {"c": 23, "k": "愛知", "y": "あいち", "r": "aichi", "g": "cb", "m": "みそかつ・名古屋城", "e": "🏯"}, {"c": 24, "k": "三重", "y": "みえ", "r": "mie", "g": "kk", "m": "伊勢海老・真珠", "e": "🦞"}, {"c": 25, "k": "滋賀", "y": "しが", "r": "shiga", "g": "kk", "m": "琵琶湖・近江牛", "e": "🌊"}, {"c": 26, "k": "京都", "y": "きょうと", "r": "kyoto", "g": "kk", "m": "抹茶・八ツ橋", "e": "⛩️"}, {"c": 27, "k": "大阪", "y": "おおさか", "r": "osaka", "g": "kk", "m": "たこ焼き", "e": "🐙"}, {"c": 28, "k": "兵庫", "y": "ひょうご", "r": "hyogo", "g": "kk", "m": "神戸牛", "e": "🥩"}, {"c": 29, "k": "奈良", "y": "なら", "r": "nara", "g": "kk", "m": "鹿・大仏", "e": "🦌"}, {"c": 30, "k": "和歌山", "y": "わかやま", "r": "wakayama", "g": "kk", "m": "梅・みかん", "e": "🍊"}, {"c": 31, "k": "鳥取", "y": "とっとり", "r": "tottori", "g": "cs", "m": "鳥取砂丘・梨", "e": "🏜️"}, {"c": 32, "k": "島根", "y": "しまね", "r": "shimane", "g": "cs", "m": "しじみ・出雲そば", "e": "🐚"}, {"c": 33, "k": "岡山", "y": "おかやま", "r": "okayama", "g": "cs", "m": "白桃・マスカット", "e": "🍑"}, {"c": 34, "k": "広島", "y": "ひろしま", "r": "hiroshima", "g": "cs", "m": "牡蠣・お好み焼き", "e": "🦪"}, {"c": 35, "k": "山口", "y": "やまぐち", "r": "yamaguchi", "g": "cs", "m": "ふぐ", "e": "🐡"}, {"c": 36, "k": "徳島", "y": "とくしま", "r": "tokushima", "g": "cs", "m": "すだち・鳴門の渦潮", "e": "🌀"}, {"c": 37, "k": "香川", "y": "かがわ", "r": "kagawa", "g": "cs", "m": "讃岐うどん", "e": "🍜"}, {"c": 38, "k": "愛媛", "y": "えひめ", "r": "ehime", "g": "cs", "m": "みかん", "e": "🍊"}, {"c": 39, "k": "高知", "y": "こうち", "r": "kochi", "g": "cs", "m": "かつお・ゆず", "e": "🐟"}, {"c": 40, "k": "福岡", "y": "ふくおか", "r": "fukuoka", "g": "ko", "m": "博多ラーメン・明太子", "e": "🍜"}, {"c": 41, "k": "佐賀", "y": "さが", "r": "saga", "g": "ko", "m": "有田焼・佐賀牛", "e": "🏺"}, {"c": 42, "k": "長崎", "y": "ながさき", "r": "nagasaki", "g": "ko", "m": "カステラ・ちゃんぽん", "e": "🍰"}, {"c": 43, "k": "熊本", "y": "くまもと", "r": "kumamoto", "g": "ko", "m": "すいか・馬刺し", "e": "🍉"}, {"c": 44, "k": "大分", "y": "おおいた", "r": "oita", "g": "ko", "m": "別府温泉・かぼす", "e": "♨️"}, {"c": 45, "k": "宮崎", "y": "みやざき", "r": "miyazaki", "g": "ko", "m": "マンゴー・地鶏", "e": "🥭"}, {"c": 46, "k": "鹿児島", "y": "かごしま", "r": "kagoshima", "g": "ko", "m": "さつまいも・黒豚", "e": "🍠"}, {"c": 47, "k": "沖縄", "y": "おきなわ", "r": "okinawa", "g": "ko", "m": "パイナップル・ゴーヤ", "e": "🍍"}]; const P={"fs": 13.0, "h": 22.1, "emoji": 14.9, "padX": 7.2, "gap": 2.3, "pills": [{"c": 1, "x": 722.4, "y": 163.8, "w": 70.6, "ax": 722.4, "ay": 163.8, "lead": false}, {"c": 2, "x": 647.1, "y": 333.8, "w": 57.6, "ax": 647.1, "ay": 333.8, "lead": false}, {"c": 3, "x": 683.4, "y": 409.6, "w": 57.6, "ax": 676.1, "ay": 409.6, "lead": false}, {"c": 4, "x": 667.9, "y": 484.4, "w": 57.6, "ax": 657.4, "ay": 484.4, "lead": false}, {"c": 5, "x": 621.1, "y": 401.4, "w": 57.6, "ax": 628.4, "ay": 401.4, "lead": false}, {"c": 6, "x": 605.5, "y": 485.2, "w": 57.6, "ax": 616.0, "ay": 485.2, "lead": false}, {"c": 7, "x": 624.0, "y": 550.0, "w": 57.6, "ax": 624.0, "ay": 553.8, "lead": false}, {"c": 8, "x": 630.9, "y": 602.6, "w": 57.6, "ax": 630.9, "ay": 622.7, "lead": true}, {"c": 9, "x": 604.4, "y": 576.4, "w": 57.6, "ax": 604.4, "ay": 598.8, "lead": true}, {"c": 10, "x": 561.3, "y": 602.6, "w": 57.6, "ax": 561.3, "ay": 611.7, "lead": false}, {"c": 11, "x": 581.8, "y": 628.9, "w": 57.6, "ax": 581.8, "ay": 643.4, "lead": true}, {"c": 12, "x": 638.4, "y": 683.2, "w": 57.6, "ax": 626.8, "ay": 674.0, "lead": true}, {"c": 13, "x": 586.0, "y": 655.8, "w": 57.6, "ax": 586.0, "ay": 661.7, "lead": false}, {"c": 14, "x": 569.5, "y": 708.4, "w": 70.6, "ax": 581.1, "ay": 680.9, "lead": true}, {"c": 15, "x": 558.9, "y": 548.7, "w": 57.6, "ax": 558.9, "ay": 548.7, "lead": false}, {"c": 16, "x": 473.0, "y": 609.9, "w": 57.6, "ax": 473.0, "ay": 603.3, "lead": false}, {"c": 17, "x": 446.9, "y": 583.6, "w": 57.6, "ax": 446.9, "ay": 595.7, "lead": false}, {"c": 18, "x": 408.8, "y": 651.9, "w": 57.6, "ax": 418.2, "ay": 654.0, "lead": false}, {"c": 19, "x": 543.1, "y": 682.1, "w": 57.6, "ax": 543.1, "ay": 668.7, "lead": true}, {"c": 20, "x": 513.1, "y": 636.8, "w": 57.6, "ax": 513.1, "ay": 635.8, "lead": false}, {"c": 21, "x": 471.2, "y": 663.0, "w": 57.6, "ax": 461.8, "ay": 658.5, "lead": false}, {"c": 22, "x": 529.3, "y": 734.7, "w": 57.6, "ax": 529.3, "ay": 707.2, "lead": true}, {"c": 23, "x": 472.6, "y": 704.7, "w": 57.6, "ax": 469.7, "ay": 706.4, "lead": false}, {"c": 24, "x": 433.5, "y": 731.1, "w": 57.6, "ax": 425.4, "ay": 738.8, "lead": false}, {"c": 25, "x": 410.2, "y": 704.7, "w": 57.6, "ax": 413.1, "ay": 694.4, "lead": false}, {"c": 26, "x": 376.8, "y": 678.4, "w": 57.6, "ax": 376.8, "ay": 691.3, "lead": false}, {"c": 27, "x": 371.2, "y": 731.6, "w": 57.6, "ax": 379.3, "ay": 732.1, "lead": false}, {"c": 28, "x": 348.3, "y": 704.7, "w": 57.6, "ax": 344.0, "ay": 700.5, "lead": false}, {"c": 29, "x": 398.1, "y": 758.0, "w": 57.6, "ax": 398.1, "ay": 752.3, "lead": false}, {"c": 30, "x": 378.8, "y": 784.3, "w": 70.6, "ax": 378.2, "ay": 777.7, "lead": false}, {"c": 31, "x": 293.8, "y": 678.2, "w": 57.6, "ax": 293.8, "ay": 681.9, "lead": false}, {"c": 32, "x": 223.0, "y": 701.0, "w": 57.6, "ax": 223.0, "ay": 701.0, "lead": false}, {"c": 33, "x": 286.3, "y": 705.3, "w": 57.6, "ax": 290.6, "ay": 711.1, "lead": false}, {"c": 34, "x": 235.2, "y": 732.2, "w": 57.6, "ax": 235.5, "ay": 726.3, "lead": false}, {"c": 35, "x": 168.6, "y": 749.0, "w": 57.6, "ax": 168.6, "ay": 749.0, "lead": false}, {"c": 36, "x": 310.1, "y": 779.0, "w": 57.6, "ax": 310.7, "ay": 775.3, "lead": false}, {"c": 37, "x": 297.2, "y": 752.4, "w": 57.6, "ax": 296.9, "ay": 756.1, "lead": false}, {"c": 38, "x": 235.5, "y": 785.3, "w": 57.6, "ax": 235.5, "ay": 792.1, "lead": false}, {"c": 39, "x": 262.8, "y": 812.2, "w": 57.6, "ax": 262.8, "ay": 805.4, "lead": false}, {"c": 40, "x": 118.7, "y": 775.5, "w": 57.6, "ax": 118.7, "ay": 790.4, "lead": true}, {"c": 41, "x": 88.4, "y": 801.9, "w": 57.6, "ax": 88.4, "ay": 803.2, "lead": false}, {"c": 42, "x": 77.2, "y": 828.4, "w": 57.6, "ax": 77.2, "ay": 824.3, "lead": false}, {"c": 43, "x": 124.4, "y": 855.3, "w": 57.6, "ax": 124.4, "ay": 846.9, "lead": false}, {"c": 44, "x": 158.6, "y": 813.8, "w": 57.6, "ax": 158.6, "ay": 813.8, "lead": false}, {"c": 45, "x": 147.7, "y": 881.7, "w": 57.6, "ax": 147.7, "ay": 877.9, "lead": false}, {"c": 46, "x": 109.4, "y": 910.7, "w": 70.6, "ax": 109.4, "ay": 910.7, "lead": false}, {"c": 47, "x": 395.0, "y": 915.0, "w": 57.6, "ax": 395.0, "ay": 915.0, "lead": false}]}; const MB={"47": {"cx": 395.0, "cy": 915.0, "x": 383.2, "y": 901.9, "w": 24.1, "h": 28.4}, "46": {"cx": 109.4, "cy": 910.7, "x": 80.0, "y": 875.5, "w": 59.7, "h": 76.1}, "45": {"cx": 147.7, "cy": 877.9, "x": 115.0, "y": 837.4, "w": 66.9, "h": 93.6}, "44": {"cx": 158.6, "cy": 813.8, "x": 126.3, "y": 782.9, "w": 66.9, "h": 61.7}, "43": {"cx": 124.4, "cy": 846.9, "x": 96.5, "y": 812.8, "w": 55.6, "h": 68.9}, "42": {"cx": 77.2, "cy": 824.3, "x": 58.4, "y": 794.2, "w": 42.2, "h": 53.5}, "41": {"cx": 88.4, "cy": 803.2, "x": 69.7, "y": 785.0, "w": 42.2, "h": 40.1}, "40": {"cx": 118.7, "cy": 790.4, "x": 85.2, "y": 763.4, "w": 61.7, "h": 59.7}, "39": {"cx": 262.8, "cy": 805.4, "x": 222.0, "y": 776.7, "w": 91.6, "h": 72.0}, "38": {"cx": 235.5, "cy": 792.1, "x": 190.1, "y": 758.2, "w": 91.6, "h": 78.2}, "37": {"cx": 296.9, "cy": 756.1, "x": 275.5, "y": 743.8, "w": 46.3, "h": 24.7}, "36": {"cx": 310.7, "cy": 775.3, "x": 279.6, "y": 755.1, "w": 58.6, "h": 44.2}, "35": {"cx": 168.6, "cy": 749.0, "x": 131.5, "y": 720.2, "w": 74.1, "h": 55.6}, "34": {"cx": 235.5, "cy": 726.3, "x": 195.3, "y": 696.5, "w": 75.1, "h": 57.6}, "33": {"cx": 290.6, "cy": 711.1, "x": 262.1, "y": 682.1, "w": 60.7, "h": 59.7}, "32": {"cx": 223.0, "cy": 701.0, "x": 175.7, "y": 664.6, "w": 90.5, "h": 80.2}, "31": {"cx": 293.8, "cy": 681.9, "x": 254.9, "y": 666.7, "w": 73.0, "h": 34.0}, "30": {"cx": 378.2, "cy": 777.7, "x": 354.7, "y": 747.9, "w": 50.4, "h": 60.7}, "29": {"cx": 398.1, "cy": 752.3, "x": 380.4, "y": 722.2, "w": 37.0, "h": 58.6}, "28": {"cx": 344.0, "cy": 700.5, "x": 313.6, "y": 663.6, "w": 63.8, "h": 67.9}, "27": {"cx": 379.3, "cy": 732.1, "x": 356.8, "y": 704.7, "w": 35.0, "h": 49.4}, "26": {"cx": 376.8, "cy": 691.3, "x": 346.5, "y": 657.4, "w": 61.7, "h": 70.0}, "25": {"cx": 413.1, "cy": 694.4, "x": 393.8, "y": 663.6, "w": 36.0, "h": 57.6}, "24": {"cx": 425.4, "cy": 738.8, "x": 396.9, "y": 692.4, "w": 57.6, "h": 97.7}, "23": {"cx": 469.7, "cy": 706.4, "x": 441.1, "y": 682.1, "w": 61.7, "h": 53.5}, "22": {"cx": 529.3, "cy": 707.2, "x": 484.3, "y": 667.7, "w": 87.4, "h": 66.9}, "21": {"cx": 461.8, "cy": 658.5, "x": 421.6, "y": 615.2, "w": 71.0, "h": 84.4}, "20": {"cx": 513.1, "cy": 635.8, "x": 476.1, "y": 578.2, "w": 73.0, "h": 118.3}, "19": {"cx": 543.1, "cy": 668.7, "x": 520.4, "y": 646.1, "w": 49.4, "h": 51.4}, "18": {"cx": 418.2, "cy": 654.0, "x": 378.4, "y": 625.5, "w": 72.0, "h": 59.7}, "17": {"cx": 446.9, "cy": 595.7, "x": 419.5, "y": 546.3, "w": 58.6, "h": 93.6}, "16": {"cx": 473.0, "cy": 603.3, "x": 447.3, "y": 581.3, "w": 51.4, "h": 45.3}, "15": {"cx": 558.9, "cy": 548.7, "x": 491.6, "y": 479.4, "w": 114.2, "h": 117.3}, "14": {"cx": 581.1, "cy": 680.9, "x": 559.5, "y": 664.6, "w": 45.3, "h": 35.0}, "13": {"cx": 586.0, "cy": 661.7, "x": 560.5, "y": 650.2, "w": 50.4, "h": 25.7}, "12": {"cx": 626.8, "cy": 674.0, "x": 603.7, "y": 636.8, "w": 56.6, "h": 77.2}, "11": {"cx": 581.8, "cy": 643.4, "x": 548.1, "y": 625.5, "w": 61.7, "h": 34.0}, "10": {"cx": 561.3, "cy": 611.7, "x": 531.7, "y": 576.1, "w": 65.8, "h": 68.9}, "9": {"cx": 604.4, "cy": 598.8, "x": 579.0, "y": 568.9, "w": 49.4, "h": 61.7}, "8": {"cx": 630.9, "cy": 622.7, "x": 598.5, "y": 581.3, "w": 61.7, "h": 76.1}, "7": {"cx": 624.0, "cy": 553.8, "x": 569.7, "y": 515.4, "w": 95.7, "h": 76.1}, "6": {"cx": 616.0, "cy": 485.2, "x": 588.3, "y": 441.4, "w": 54.5, "h": 89.5}, "5": {"cx": 628.4, "cy": 401.4, "x": 593.4, "y": 351.9, "w": 61.7, "h": 104.9}, "4": {"cx": 657.4, "cy": 484.4, "x": 625.3, "y": 447.5, "w": 68.9, "h": 80.2}, "3": {"cx": 676.1, "cy": 409.6, "x": 641.8, "y": 353.9, "w": 70.0, "h": 110.1}, "2": {"cx": 647.1, "cy": 333.8, "x": 600.6, "y": 285.0, "w": 88.5, "h": 84.4}, "1": {"cx": 722.4, "cy": 163.8, "x": 593.4, "y": 28.8, "w": 279.8, "h": 266.5}};
+const DATA=[{"c": 1, "k": "北海道", "y": "ほっかいどう", "r": "hokkaido", "g": "ht", "m": "じゃがいも、小麦、鮭", "e": "🦀"}, {"c": 2, "k": "青森", "y": "あおもり", "r": "aomori", "g": "ht", "m": "りんご、にんにく、マグロ", "e": "🍎"}, {"c": 3, "k": "岩手", "y": "いわて", "r": "iwate", "g": "ht", "m": "わんこそば、南部鉄器、わかめ", "e": "🫖"}, {"c": 4, "k": "宮城", "y": "みやぎ", "r": "miyagi", "g": "ht", "m": "牛タン、笹かまぼこ", "e": "🐮"}, {"c": 5, "k": "秋田", "y": "あきた", "r": "akita", "g": "ht", "m": "きりたんぽ、稲庭うどん、米", "e": "🐕"}, {"c": 6, "k": "山形", "y": "やまがた", "r": "yamagata", "g": "ht", "m": "さくらんぼ、ラ・フランス、平田ねぎ", "e": "🍒"}, {"c": 7, "k": "福島", "y": "ふくしま", "r": "fukushima", "g": "ht", "m": "桃、喜多方ラーメン、会津漆器", "e": "🍑"}, {"c": 8, "k": "茨城", "y": "いばらき", "r": "ibaraki", "g": "kt", "m": "メロン、れんこん、納豆", "e": "🍈"}, {"c": 9, "k": "栃木", "y": "とちぎ", "r": "tochigi", "g": "kt", "m": "いちご、餃子、かんぴょう", "e": "🍓"}, {"c": 10, "k": "群馬", "y": "ぐんま", "r": "gunma", "g": "kt", "m": "キャベツ、きゅうり、下仁田ねぎ", "e": "🥬"}, {"c": 11, "k": "埼玉", "y": "さいたま", "r": "saitama", "g": "kt", "m": "草加せんべい、深谷ねぎ、狭山茶", "e": "🍘"}, {"c": 12, "k": "千葉", "y": "ちば", "r": "chiba", "g": "kt", "m": "落花生、ハマグリ、しょうゆ", "e": "🥜"}, {"c": 13, "k": "東京", "y": "とうきょう", "r": "tokyo", "g": "kt", "m": "もんじゃ焼き、雷おこし、印刷業", "e": "🗼"}, {"c": 14, "k": "神奈川", "y": "かながわ", "r": "kanagawa", "g": "kt", "m": "ハトサブレ、温州みかん、かまぼこ", "e": "🗿"}, {"c": 15, "k": "新潟", "y": "にいがた", "r": "niigata", "g": "cb", "m": "こしひかり、日本酒、もち", "e": "🌾"}, {"c": 16, "k": "富山", "y": "とやま", "r": "toyama", "g": "cb", "m": "ホタルイカ、カニ、里芋", "e": "🦑"}, {"c": 17, "k": "石川", "y": "いしかわ", "r": "ishikawa", "g": "cb", "m": "甘えび、寒ブリ、いわし", "e": "✨"}, {"c": 18, "k": "福井", "y": "ふくい", "r": "fukui", "g": "cb", "m": "越前ガニ、花らっきょ、若狭ふぐ", "e": "🦕"}, {"c": 19, "k": "山梨", "y": "やまなし", "r": "yamanashi", "g": "cb", "m": "ぶどう、すもも、ほうとう", "e": "🍇"}, {"c": 20, "k": "長野", "y": "ながの", "r": "nagano", "g": "cb", "m": "そば、野沢菜、りんご", "e": "🏔️"}, {"c": 21, "k": "岐阜", "y": "ぎふ", "r": "gifu", "g": "cb", "m": "飛騨牛、朴葉味噌、鮎", "e": "🏠"}, {"c": 22, "k": "静岡", "y": "しずおか", "r": "shizuoka", "g": "cb", "m": "お茶、かつお、マグロ", "e": "🍵"}, {"c": 23, "k": "愛知", "y": "あいち", "r": "aichi", "g": "cb", "m": "ういろう、味噌カツ、ひつまぶし", "e": "🏯"}, {"c": 24, "k": "三重", "y": "みえ", "r": "mie", "g": "kk", "m": "赤福、伊勢エビ、養殖マダイ", "e": "🦞"}, {"c": 25, "k": "滋賀", "y": "しが", "r": "shiga", "g": "kk", "m": "鮒ずし、小麦、近江牛", "e": "🌊"}, {"c": 26, "k": "京都", "y": "きょうと", "r": "kyoto", "g": "kk", "m": "ゆば、湯豆腐、生八つ橋", "e": "⛩️"}, {"c": 27, "k": "大阪", "y": "おおさか", "r": "osaka", "g": "kk", "m": "お好み焼き、たこ焼き", "e": "🐙"}, {"c": 28, "k": "兵庫", "y": "ひょうご", "r": "hyogo", "g": "kk", "m": "明石焼き、養殖のり、神戸牛", "e": "🥩"}, {"c": 29, "k": "奈良", "y": "なら", "r": "nara", "g": "kk", "m": "柿、吉野葛、さつま焼き", "e": "🦌"}, {"c": 30, "k": "和歌山", "y": "わかやま", "r": "wakayama", "g": "kk", "m": "南高梅、はっさく、みかん", "e": "🍙"}, {"c": 31, "k": "鳥取", "y": "とっとり", "r": "tottori", "g": "cs", "m": "らっきょう、二十世紀梨、松葉ガニ", "e": "🏜️"}, {"c": 32, "k": "島根", "y": "しまね", "r": "shimane", "g": "cs", "m": "しじみ、出雲そば、いちじく", "e": "🐚"}, {"c": 33, "k": "岡山", "y": "おかやま", "r": "okayama", "g": "cs", "m": "白桃、きびだんご、備前大根", "e": "🍑"}, {"c": 34, "k": "広島", "y": "ひろしま", "r": "hiroshima", "g": "cs", "m": "牡蠣、もみじ饅頭、松茸", "e": "🦪"}, {"c": 35, "k": "山口", "y": "やまぐち", "r": "yamaguchi", "g": "cs", "m": "ふぐ、夏みかん、養殖エビ", "e": "🐡"}, {"c": 36, "k": "徳島", "y": "とくしま", "r": "tokushima", "g": "cs", "m": "すだち、鳴門金時、白瓜", "e": "🌀"}, {"c": 37, "k": "香川", "y": "かがわ", "r": "kagawa", "g": "cs", "m": "讃岐うどん、オリーブ、にんにく", "e": "🫒"}, {"c": 38, "k": "愛媛", "y": "えひめ", "r": "ehime", "g": "cs", "m": "いよかん、養殖ブリ、みかん", "e": "🍊"}, {"c": 39, "k": "高知", "y": "こうち", "r": "kochi", "g": "cs", "m": "ぽんかん、なす、ピーマン", "e": "🐟"}, {"c": 40, "k": "福岡", "y": "ふくおか", "r": "fukuoka", "g": "ko", "m": "水炊き、辛子明太子、ムツゴロウ", "e": "🍜"}, {"c": 41, "k": "佐賀", "y": "さが", "r": "saga", "g": "ko", "m": "佐賀牛、有明海苔、呼子イカ", "e": "🏺"}, {"c": 42, "k": "長崎", "y": "ながさき", "r": "nagasaki", "g": "ko", "m": "カステラ、ちゃんぽん、五島うどん", "e": "🍰"}, {"c": 43, "k": "熊本", "y": "くまもと", "r": "kumamoto", "g": "ko", "m": "馬刺し、スイカ、辛子蓮根", "e": "🍉"}, {"c": 44, "k": "大分", "y": "おおいた", "r": "oita", "g": "ko", "m": "かぼす、関サバ、関アジ", "e": "♨️"}, {"c": 45, "k": "宮崎", "y": "みやざき", "r": "miyazaki", "g": "ko", "m": "マンゴー、地鶏、冷や汁", "e": "🥭"}, {"c": 46, "k": "鹿児島", "y": "かごしま", "r": "kagoshima", "g": "ko", "m": "黒豚、さつま揚げ、黒糖", "e": "🍠"}, {"c": 47, "k": "沖縄", "y": "おきなわ", "r": "okinawa", "g": "ko", "m": "ゴーヤー、ちんすこう、泡盛", "e": "🍍"}]; const P={"fs": 13.0, "h": 22.1, "emoji": 14.9, "padX": 7.2, "gap": 2.3, "pills": [{"c": 1, "x": 722.4, "y": 163.8, "w": 70.6, "ax": 722.4, "ay": 163.8, "lead": false}, {"c": 2, "x": 647.1, "y": 333.8, "w": 57.6, "ax": 647.1, "ay": 333.8, "lead": false}, {"c": 3, "x": 683.4, "y": 409.6, "w": 57.6, "ax": 676.1, "ay": 409.6, "lead": false}, {"c": 4, "x": 667.9, "y": 484.4, "w": 57.6, "ax": 657.4, "ay": 484.4, "lead": false}, {"c": 5, "x": 621.1, "y": 401.4, "w": 57.6, "ax": 628.4, "ay": 401.4, "lead": false}, {"c": 6, "x": 605.5, "y": 485.2, "w": 57.6, "ax": 616.0, "ay": 485.2, "lead": false}, {"c": 7, "x": 624.0, "y": 550.0, "w": 57.6, "ax": 624.0, "ay": 553.8, "lead": false}, {"c": 8, "x": 630.9, "y": 602.6, "w": 57.6, "ax": 630.9, "ay": 622.7, "lead": true}, {"c": 9, "x": 604.4, "y": 576.4, "w": 57.6, "ax": 604.4, "ay": 598.8, "lead": true}, {"c": 10, "x": 561.3, "y": 602.6, "w": 57.6, "ax": 561.3, "ay": 611.7, "lead": false}, {"c": 11, "x": 581.8, "y": 628.9, "w": 57.6, "ax": 581.8, "ay": 643.4, "lead": true}, {"c": 12, "x": 638.4, "y": 683.2, "w": 57.6, "ax": 626.8, "ay": 674.0, "lead": true}, {"c": 13, "x": 586.0, "y": 655.8, "w": 57.6, "ax": 586.0, "ay": 661.7, "lead": false}, {"c": 14, "x": 569.5, "y": 708.4, "w": 70.6, "ax": 581.1, "ay": 680.9, "lead": true}, {"c": 15, "x": 558.9, "y": 548.7, "w": 57.6, "ax": 558.9, "ay": 548.7, "lead": false}, {"c": 16, "x": 473.0, "y": 609.9, "w": 57.6, "ax": 473.0, "ay": 603.3, "lead": false}, {"c": 17, "x": 446.9, "y": 583.6, "w": 57.6, "ax": 446.9, "ay": 595.7, "lead": false}, {"c": 18, "x": 408.8, "y": 651.9, "w": 57.6, "ax": 418.2, "ay": 654.0, "lead": false}, {"c": 19, "x": 543.1, "y": 682.1, "w": 57.6, "ax": 543.1, "ay": 668.7, "lead": true}, {"c": 20, "x": 513.1, "y": 636.8, "w": 57.6, "ax": 513.1, "ay": 635.8, "lead": false}, {"c": 21, "x": 471.2, "y": 663.0, "w": 57.6, "ax": 461.8, "ay": 658.5, "lead": false}, {"c": 22, "x": 529.3, "y": 734.7, "w": 57.6, "ax": 529.3, "ay": 707.2, "lead": true}, {"c": 23, "x": 472.6, "y": 704.7, "w": 57.6, "ax": 469.7, "ay": 706.4, "lead": false}, {"c": 24, "x": 433.5, "y": 731.1, "w": 57.6, "ax": 425.4, "ay": 738.8, "lead": false}, {"c": 25, "x": 410.2, "y": 704.7, "w": 57.6, "ax": 413.1, "ay": 694.4, "lead": false}, {"c": 26, "x": 376.8, "y": 678.4, "w": 57.6, "ax": 376.8, "ay": 691.3, "lead": false}, {"c": 27, "x": 371.2, "y": 731.6, "w": 57.6, "ax": 379.3, "ay": 732.1, "lead": false}, {"c": 28, "x": 348.3, "y": 704.7, "w": 57.6, "ax": 344.0, "ay": 700.5, "lead": false}, {"c": 29, "x": 398.1, "y": 758.0, "w": 57.6, "ax": 398.1, "ay": 752.3, "lead": false}, {"c": 30, "x": 378.8, "y": 784.3, "w": 70.6, "ax": 378.2, "ay": 777.7, "lead": false}, {"c": 31, "x": 293.8, "y": 678.2, "w": 57.6, "ax": 293.8, "ay": 681.9, "lead": false}, {"c": 32, "x": 223.0, "y": 701.0, "w": 57.6, "ax": 223.0, "ay": 701.0, "lead": false}, {"c": 33, "x": 286.3, "y": 705.3, "w": 57.6, "ax": 290.6, "ay": 711.1, "lead": false}, {"c": 34, "x": 235.2, "y": 732.2, "w": 57.6, "ax": 235.5, "ay": 726.3, "lead": false}, {"c": 35, "x": 168.6, "y": 749.0, "w": 57.6, "ax": 168.6, "ay": 749.0, "lead": false}, {"c": 36, "x": 310.1, "y": 779.0, "w": 57.6, "ax": 310.7, "ay": 775.3, "lead": false}, {"c": 37, "x": 297.2, "y": 752.4, "w": 57.6, "ax": 296.9, "ay": 756.1, "lead": false}, {"c": 38, "x": 235.5, "y": 785.3, "w": 57.6, "ax": 235.5, "ay": 792.1, "lead": false}, {"c": 39, "x": 262.8, "y": 812.2, "w": 57.6, "ax": 262.8, "ay": 805.4, "lead": false}, {"c": 40, "x": 118.7, "y": 775.5, "w": 57.6, "ax": 118.7, "ay": 790.4, "lead": true}, {"c": 41, "x": 88.4, "y": 801.9, "w": 57.6, "ax": 88.4, "ay": 803.2, "lead": false}, {"c": 42, "x": 77.2, "y": 828.4, "w": 57.6, "ax": 77.2, "ay": 824.3, "lead": false}, {"c": 43, "x": 124.4, "y": 855.3, "w": 57.6, "ax": 124.4, "ay": 846.9, "lead": false}, {"c": 44, "x": 158.6, "y": 813.8, "w": 57.6, "ax": 158.6, "ay": 813.8, "lead": false}, {"c": 45, "x": 147.7, "y": 881.7, "w": 57.6, "ax": 147.7, "ay": 877.9, "lead": false}, {"c": 46, "x": 109.4, "y": 910.7, "w": 70.6, "ax": 109.4, "ay": 910.7, "lead": false}, {"c": 47, "x": 395.0, "y": 915.0, "w": 57.6, "ax": 395.0, "ay": 915.0, "lead": false}]}; const MB={"47": {"cx": 395.0, "cy": 915.0, "x": 383.2, "y": 901.9, "w": 24.1, "h": 28.4}, "46": {"cx": 109.4, "cy": 910.7, "x": 80.0, "y": 875.5, "w": 59.7, "h": 76.1}, "45": {"cx": 147.7, "cy": 877.9, "x": 115.0, "y": 837.4, "w": 66.9, "h": 93.6}, "44": {"cx": 158.6, "cy": 813.8, "x": 126.3, "y": 782.9, "w": 66.9, "h": 61.7}, "43": {"cx": 124.4, "cy": 846.9, "x": 96.5, "y": 812.8, "w": 55.6, "h": 68.9}, "42": {"cx": 77.2, "cy": 824.3, "x": 58.4, "y": 794.2, "w": 42.2, "h": 53.5}, "41": {"cx": 88.4, "cy": 803.2, "x": 69.7, "y": 785.0, "w": 42.2, "h": 40.1}, "40": {"cx": 118.7, "cy": 790.4, "x": 85.2, "y": 763.4, "w": 61.7, "h": 59.7}, "39": {"cx": 262.8, "cy": 805.4, "x": 222.0, "y": 776.7, "w": 91.6, "h": 72.0}, "38": {"cx": 235.5, "cy": 792.1, "x": 190.1, "y": 758.2, "w": 91.6, "h": 78.2}, "37": {"cx": 296.9, "cy": 756.1, "x": 275.5, "y": 743.8, "w": 46.3, "h": 24.7}, "36": {"cx": 310.7, "cy": 775.3, "x": 279.6, "y": 755.1, "w": 58.6, "h": 44.2}, "35": {"cx": 168.6, "cy": 749.0, "x": 131.5, "y": 720.2, "w": 74.1, "h": 55.6}, "34": {"cx": 235.5, "cy": 726.3, "x": 195.3, "y": 696.5, "w": 75.1, "h": 57.6}, "33": {"cx": 290.6, "cy": 711.1, "x": 262.1, "y": 682.1, "w": 60.7, "h": 59.7}, "32": {"cx": 223.0, "cy": 701.0, "x": 175.7, "y": 664.6, "w": 90.5, "h": 80.2}, "31": {"cx": 293.8, "cy": 681.9, "x": 254.9, "y": 666.7, "w": 73.0, "h": 34.0}, "30": {"cx": 378.2, "cy": 777.7, "x": 354.7, "y": 747.9, "w": 50.4, "h": 60.7}, "29": {"cx": 398.1, "cy": 752.3, "x": 380.4, "y": 722.2, "w": 37.0, "h": 58.6}, "28": {"cx": 344.0, "cy": 700.5, "x": 313.6, "y": 663.6, "w": 63.8, "h": 67.9}, "27": {"cx": 379.3, "cy": 732.1, "x": 356.8, "y": 704.7, "w": 35.0, "h": 49.4}, "26": {"cx": 376.8, "cy": 691.3, "x": 346.5, "y": 657.4, "w": 61.7, "h": 70.0}, "25": {"cx": 413.1, "cy": 694.4, "x": 393.8, "y": 663.6, "w": 36.0, "h": 57.6}, "24": {"cx": 425.4, "cy": 738.8, "x": 396.9, "y": 692.4, "w": 57.6, "h": 97.7}, "23": {"cx": 469.7, "cy": 706.4, "x": 441.1, "y": 682.1, "w": 61.7, "h": 53.5}, "22": {"cx": 529.3, "cy": 707.2, "x": 484.3, "y": 667.7, "w": 87.4, "h": 66.9}, "21": {"cx": 461.8, "cy": 658.5, "x": 421.6, "y": 615.2, "w": 71.0, "h": 84.4}, "20": {"cx": 513.1, "cy": 635.8, "x": 476.1, "y": 578.2, "w": 73.0, "h": 118.3}, "19": {"cx": 543.1, "cy": 668.7, "x": 520.4, "y": 646.1, "w": 49.4, "h": 51.4}, "18": {"cx": 418.2, "cy": 654.0, "x": 378.4, "y": 625.5, "w": 72.0, "h": 59.7}, "17": {"cx": 446.9, "cy": 595.7, "x": 419.5, "y": 546.3, "w": 58.6, "h": 93.6}, "16": {"cx": 473.0, "cy": 603.3, "x": 447.3, "y": 581.3, "w": 51.4, "h": 45.3}, "15": {"cx": 558.9, "cy": 548.7, "x": 491.6, "y": 479.4, "w": 114.2, "h": 117.3}, "14": {"cx": 581.1, "cy": 680.9, "x": 559.5, "y": 664.6, "w": 45.3, "h": 35.0}, "13": {"cx": 586.0, "cy": 661.7, "x": 560.5, "y": 650.2, "w": 50.4, "h": 25.7}, "12": {"cx": 626.8, "cy": 674.0, "x": 603.7, "y": 636.8, "w": 56.6, "h": 77.2}, "11": {"cx": 581.8, "cy": 643.4, "x": 548.1, "y": 625.5, "w": 61.7, "h": 34.0}, "10": {"cx": 561.3, "cy": 611.7, "x": 531.7, "y": 576.1, "w": 65.8, "h": 68.9}, "9": {"cx": 604.4, "cy": 598.8, "x": 579.0, "y": 568.9, "w": 49.4, "h": 61.7}, "8": {"cx": 630.9, "cy": 622.7, "x": 598.5, "y": 581.3, "w": 61.7, "h": 76.1}, "7": {"cx": 624.0, "cy": 553.8, "x": 569.7, "y": 515.4, "w": 95.7, "h": 76.1}, "6": {"cx": 616.0, "cy": 485.2, "x": 588.3, "y": 441.4, "w": 54.5, "h": 89.5}, "5": {"cx": 628.4, "cy": 401.4, "x": 593.4, "y": 351.9, "w": 61.7, "h": 104.9}, "4": {"cx": 657.4, "cy": 484.4, "x": 625.3, "y": 447.5, "w": 68.9, "h": 80.2}, "3": {"cx": 676.1, "cy": 409.6, "x": 641.8, "y": 353.9, "w": 70.0, "h": 110.1}, "2": {"cx": 647.1, "cy": 333.8, "x": 600.6, "y": 285.0, "w": 88.5, "h": 84.4}, "1": {"cx": 722.4, "cy": 163.8, "x": 593.4, "y": 28.8, "w": 279.8, "h": 266.5}};
 const BY={}; DATA.forEach(d=>BY[d.c]=d);
 const REG={all:{label:"<ruby>全部<rt>ぜんぶ</rt></ruby>"},ht:{label:"<ruby>北海道<rt>ほっかいどう</rt></ruby>・<ruby>東北<rt>とうほく</rt></ruby>"},kt:{label:"<ruby>関東<rt>かんとう</rt></ruby>"},cb:{label:"<ruby>中部<rt>ちゅうぶ</rt></ruby>"},kk:{label:"<ruby>近畿<rt>きんき</rt></ruby>"},cs:{label:"<ruby>中国<rt>ちゅうごく</rt></ruby>・<ruby>四国<rt>しこく</rt></ruby>"},ko:{label:"<ruby>九州<rt>きゅうしゅう</rt></ruby>・<ruby>沖縄<rt>おきなわ</rt></ruby>"}};
 Object.keys(REG).forEach(k=>REG[k].codes=k==="all"?DATA.map(d=>d.c):DATA.filter(d=>d.g===k).map(d=>d.c));
 const SUF=c=>c===1?"":(c===13?"都":(c===26||c===27?"府":"県"));
 const REGLABEL=c=>REG[BY[c].g].label;
 const SVGNS="http://www.w3.org/2000/svg";
+const R=(k,y)=>"<ruby>"+k+"<rt>"+y+"</rt></ruby>";
+let points=0,unlockedCount=1;
 
 const map=document.getElementById('map'), wrap=document.getElementById('mapwrap');
 const gEl={}; DATA.forEach(d=>{gEl[d.c]=map.querySelector('g[data-code="'+d.c+'"]'); if(gEl[d.c])gEl[d.c].classList.add('r-'+d.g);});
@@ -514,16 +548,17 @@ function startRound(filter,codes){curFilter=filter;order=shuffle(codes||REG[filt
   resetView();nextQuestion();}
 function updateScore(){document.getElementById('count').innerHTML=Math.min(idx+1,order.length)+" / "+order.length+" <ruby>問<rt>もん</rt></ruby>";
   document.getElementById('okcount').innerHTML="<ruby>正解<rt>せいかい</rt></ruby> "+okN;document.getElementById('barfill').style.width=(order.length?idx/order.length*100:0)+"%";}
+const qEl=document.querySelector('.q');
 const fb=document.getElementById('feedback'),ans=document.getElementById('ans'),nextBtn=document.getElementById('next'),
       submitBtn=document.getElementById('submit'),hintBtn=document.getElementById('hint'),revealBtn=document.getElementById('reveal');
 function nextQuestion(){if(idx>=order.length){showSummary();return;}
   attempts=0;answered=false;Object.values(gEl).forEach(g=>g.classList.remove('is-target','is-wrong'));
   const d=BY[order[idx]];gEl[d.c].classList.add('is-target');
-  fb.className="feedback";fb.innerHTML="<ruby>光<rt>ひか</rt></ruby>っている<ruby>県<rt>けん</rt></ruby>は？ 🎤 か <ruby>入力<rt>にゅうりょく</rt></ruby>";
+  {qEl.innerHTML=d.e+" 「"+d.m+"」で"+R("有名","ゆうめい")+"な、"+R("光","ひか")+"っている"+R("県","けん")+"は？";}fb.className="feedback";fb.innerHTML="🎤 か "+R("入力","にゅうりょく")+"でこたえてね";positionMarker(d.c);
   ans.value="";ans.disabled=false;submitBtn.disabled=false;hintBtn.disabled=false;revealBtn.disabled=false;nextBtn.hidden=true;
   resetView(true);updateScore();setTimeout(()=>ans.focus(),0);}
 function markDone(cls){const d=BY[order[idx]];gEl[d.c].classList.remove('is-target','is-wrong');gEl[d.c].classList.add(cls);}
-function correct(){if(answered)return;answered=true;okN++;const d=BY[order[idx]];markDone('done-ok');
+function correct(){if(answered)return;answered=true;sfxCorrect();okN++;points++;updatePoints();const d=BY[order[idx]];markDone('done-ok');
   fb.className="feedback fb-ok";fb.innerHTML="<ruby>正解<rt>せいかい</rt></ruby>！ ⭕ "+d.k+SUF(d.c)+" <span class='yomi'>（"+d.y+"）</span>";
   ans.disabled=true;submitBtn.disabled=true;hintBtn.disabled=true;revealBtn.disabled=true;nextBtn.hidden=false;}
 function wrong(){attempts++;const d=BY[order[idx]];gEl[d.c].classList.add('is-wrong');setTimeout(()=>gEl[d.c].classList.remove('is-wrong'),450);
@@ -539,7 +574,7 @@ ans.addEventListener('keydown',e=>{if(e.key==="Enter"&&!e.isComposing){e.prevent
 function showSummary(){document.getElementById('quizcard').hidden=true;const s=document.getElementById('summary');s.hidden=false;
   document.getElementById('barfill').style.width="100%";document.getElementById('count').innerHTML=order.length+" / "+order.length+" <ruby>問<rt>もん</rt></ruby>";
   document.getElementById('finalscore').textContent=okN+" / "+order.length;const rate=order.length?okN/order.length:0;
-  document.getElementById('finalmsg').innerHTML=rate===1?"<ruby>全問<rt>ぜんもん</rt></ruby> <ruby>正解<rt>せいかい</rt></ruby>！すごい！🏆":rate>=.8?"あと<ruby>少<rt>すこ</rt></ruby>し！いい<ruby>調子<rt>ちょうし</rt></ruby>✨":rate>=.5?"<ruby>半分<rt>はんぶん</rt></ruby> こえた！つづけよう💪":"くりかえせば <ruby>覚<rt>おぼ</rt></ruby>えられるよ🌱";
+  document.getElementById('finalmsg').innerHTML=rate===1?"<ruby>全問<rt>ぜんもん</rt></ruby> <ruby>正解<rt>せいかい</rt></ruby>！すごい！🏆":rate>=.8?"あと<ruby>少<rt>すこ</rt></ruby>し！いい<ruby>調子<rt>ちょうし</rt></ruby>✨":rate>=.5?"<ruby>半分<rt>はんぶん</rt></ruby> こえた！つづけよう💪":"くりかえせば <ruby>覚<rt>おぼ</rt></ruby>えられるよ🌱";if(order.length>0&&okN===order.length){points+=10;fireworks();document.getElementById('finalmsg').innerHTML+="<br>ぜんぶ せいかい ボーナス +10⭐";}else{sfxComplete();}updatePoints();
   const mb=document.getElementById('missbox'),ml=document.getElementById('misslist'),miss=window._m||[];
   if(miss.length){mb.hidden=false;ml.innerHTML="";miss.forEach(c=>{const d=BY[c];const li=document.createElement('li');li.innerHTML=d.k+SUF(c)+" <small>"+d.y+"</small>";ml.appendChild(li);});document.getElementById('onlymiss').hidden=false;}
   else{mb.hidden=true;document.getElementById('onlymiss').hidden=true;}}
@@ -549,13 +584,25 @@ document.getElementById('onlymiss').onclick=()=>startRound(curFilter,(window._m|
 // ---- 音声 ----
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;const mic=document.getElementById('mic');
 if(!SR){mic.disabled=true;mic.title="この端末では音声が使えません";mic.style.opacity=.45;}
-else{let rec=null,listening=false;mic.onclick=()=>{if(answered)return;if(listening){try{rec.stop();}catch(e){}return;}
-  rec=new SR();rec.lang="ja-JP";rec.interimResults=false;rec.maxAlternatives=5;listening=true;mic.classList.add('rec');
-  fb.className="feedback";fb.innerHTML="きいています… <ruby>話<rt>はな</rt></ruby>してね 🎤";
-  rec.onresult=ev=>{const d=BY[order[idx]];let hit=false,first="";const al=ev.results[0];
-    for(let i=0;i<al.length;i++){const tr=al[i].transcript;if(i===0)first=tr;if(judge(tr,d)){hit=true;break;}}hit?correct():(ans.value=first,wrong());};
-  rec.onerror=e=>{fb.className="feedback fb-ng";fb.innerHTML=e.error==="not-allowed"?"マイクがブロックされてるよ。<ruby>入力<rt>にゅうりょく</rt></ruby>で<ruby>答<rt>こた</rt></ruby>えてね":"うまく<ruby>聞<rt>き</rt></ruby>き<ruby>取<rt>と</rt></ruby>れなかった…もう<ruby>一回<rt>いっかい</rt></ruby>か<ruby>入力<rt>にゅうりょく</rt></ruby>してね";};
-  rec.onend=()=>{listening=false;mic.classList.remove('rec');};try{rec.start();}catch(e){listening=false;mic.classList.remove('rec');}};}
+else{
+  let rec=null,listening=false,micReady=false,micStream=null;
+  function buildRec(){rec=new SR();rec.lang="ja-JP";rec.interimResults=false;rec.maxAlternatives=5;
+    rec.onresult=ev=>{const d=BY[order[idx]];let hit=false,first="";const al=ev.results[0];
+      for(let i=0;i<al.length;i++){const tr=al[i].transcript;if(i===0)first=tr;if(judge(tr,d)){hit=true;break;}}hit?correct():(ans.value=first,wrong());};
+    rec.onerror=ev=>{listening=false;mic.classList.remove('rec');fb.className="feedback fb-ng";
+      fb.innerHTML=(ev.error==="not-allowed"||ev.error==="service-not-allowed")?("マイクがブロックされてるよ。"+R("入力","にゅうりょく")+"で"+R("答","こた")+"えてね"):("うまく"+R("聞","き")+"きとれなかった…もう"+R("一回","いっかい")+"か"+R("入力","にゅうりょく")+"してね");};
+    rec.onend=()=>{listening=false;mic.classList.remove('rec');};}
+  async function primeMic(){if(micStream)return true;
+    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){micReady=true;return true;}
+    try{micStream=await navigator.mediaDevices.getUserMedia({audio:true});micReady=true;return true;}catch(e){return false;}}
+  mic.onclick=async()=>{if(answered)return;ac();if(listening){try{rec.stop();}catch(e){}return;}
+    if(!rec)buildRec();
+    if(!micStream){fb.className="feedback";fb.innerHTML="マイクの"+R("許可","きょか")+"をおねがい 🎤";
+      const ok=await primeMic();
+      if(!ok){fb.className="feedback fb-ng";fb.innerHTML="マイクがブロックされてるよ。"+R("入力","にゅうりょく")+"で"+R("答","こた")+"えてね";return;}}
+    try{listening=true;mic.classList.add('rec');fb.className="feedback";fb.innerHTML="きいています… "+R("話","はな")+"してね 🎤";rec.start();}
+    catch(e){listening=false;mic.classList.remove('rec');}};
+}
 
 // ================= 地図操作（pan / zoom / pinch）=================
 function setVB(x,y,w){w=Math.min(Math.max(w,150),1000);const pad=60;
@@ -621,8 +668,70 @@ function setMode(m){mode=m;document.body.classList.toggle('mode-study',m==="stud
   document.getElementById('studycard').hidden=(m!=="study");document.getElementById('quizcard').hidden=(m!=="quiz");
   document.getElementById('summary').hidden=true;document.getElementById('scorebar').hidden=(m!=="quiz");
   document.getElementById('maphint').innerHTML=m==="study"?"ドラッグで<ruby>移動<rt>いどう</rt></ruby>・つまんで<ruby>拡大<rt>かくだい</rt></ruby>・<ruby>県<rt>けん</rt></ruby>をタップ":"ドラッグで<ruby>移動<rt>いどう</rt></ruby>・つまんで<ruby>拡大<rt>かくだい</rt></ruby>";
-  clearStates();if(m==="study")studyRegion(curFilter);else startRound(curFilter);}
+  clearStates();hideMarker();if(m==="study")studyRegion(curFilter);else startRound(curFilter);}
 mS.onclick=()=>setMode("study");mQ.onclick=()=>setMode("quiz");
+// --- 光っている県の目印 ---
+function mk(tag,at){const e=document.createElementNS(SVGNS,tag);for(const k in at)e.setAttribute(k,at[k]);return e;}
+const marker=mk('g',{id:'marker'});marker.style.display='none';
+marker.appendChild(mk('circle',{'class':'ring r1',r:15,cx:0,cy:0}));
+marker.appendChild(mk('circle',{'class':'ring r2',r:15,cx:0,cy:0}));
+const _pin=mk('text',{'class':'pin',x:0,y:-30});_pin.textContent='📍';marker.appendChild(_pin);
+map.appendChild(marker);
+function positionMarker(c){const m=MB[c];if(!m)return;marker.setAttribute('transform','translate('+m.cx+' '+(m.cy)+')');marker.style.display='block';}
+function hideMarker(){marker.style.display='none';}
+
+// --- テーマ（マップの色）---
+const THEMES=[
+ {id:'sora',name:'そら',need:0,bg1:'#eaf5fb',bg2:'#f2f9ee',sea:'#dbebf6'},
+ {id:'umi',name:'うみ',need:15,bg1:'#d3ebf7',bg2:'#c6e4f1',sea:'#bcdcee'},
+ {id:'mori',name:'もり',need:40,bg1:'#e7f3da',bg2:'#d9edc7',sea:'#d3e9cd'},
+ {id:'yuyake',name:'ゆうやけ',need:80,bg1:'#ffe3d4',bg2:'#ffd7e0',sea:'#ffdecd'},
+ {id:'yozora',name:'よぞら',need:150,bg1:'#26324a',bg2:'#1b2740',sea:'#2c3b58'},
+];
+let curTheme='sora';
+function applyTheme(t){const r=document.documentElement.style;r.setProperty('--bg1',t.bg1);r.setProperty('--bg2',t.bg2);r.setProperty('--sea',t.sea);curTheme=t.id;refreshThemes();}
+function buildThemes(){const el=document.getElementById('themes');el.innerHTML='';THEMES.forEach(t=>{const b=document.createElement('button');b.dataset.id=t.id;b.dataset.need=t.need;
+  b.innerHTML='<span class="sw" style="background:'+t.bg2+';border-color:'+t.sea+'"></span><span class="nm">'+t.name+'</span>';
+  b.onclick=()=>{if(points>=t.need)applyTheme(t);};el.appendChild(b);});refreshThemes();}
+function refreshThemes(){document.querySelectorAll('#themes button').forEach(b=>{const need=+b.dataset.need,ok=points>=need;
+  b.classList.toggle('locked',!ok);b.classList.toggle('on',b.dataset.id===curTheme);b.disabled=!ok;
+  let tag=b.querySelector('.need');
+  if(!ok){if(!tag){tag=document.createElement('span');tag.className='need';b.appendChild(tag);}tag.textContent='🔒'+need;}
+  else if(tag){tag.remove();}});}
+
+// --- ポイント表示・解放通知 ---
+function updatePoints(){const p=document.getElementById('pts');if(p)p.textContent=points;refreshThemes();
+  const u=THEMES.filter(t=>points>=t.need).length;
+  if(u>unlockedCount){toast('あたらしい色「'+THEMES[u-1].name+'」が つかえるよ！🎨');}
+  unlockedCount=Math.max(unlockedCount,u);}
+
+// --- トースト ---
+let _tt;function toast(msg){const el=document.getElementById('toast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),2600);}
+
+// --- 花火 ---
+function fireworks(){const cv=document.getElementById('fx');if(!cv)return;const ctx=cv.getContext('2d');
+  cv.width=innerWidth;cv.height=innerHeight;cv.style.display='block';let parts=[],end=performance.now()+3000,last=0;
+  function burst(x,y){const col='hsl('+(Math.random()*360|0)+',90%,62%)';for(let i=0;i<44;i++){const a=Math.random()*6.283,s=1.5+Math.random()*4.5;parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:1,col});}}
+  function loop(t){ctx.clearRect(0,0,cv.width,cv.height);
+    if(t<end&&t-last>300){burst(80+Math.random()*(cv.width-160),40+Math.random()*(cv.height*0.55));last=t;sfxFirework();}
+    parts.forEach(p=>{p.vy+=0.05;p.x+=p.vx;p.y+=p.vy;p.life-=0.012;ctx.globalAlpha=Math.max(p.life,0);ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(p.x,p.y,3,0,6.283);ctx.fill();});
+    parts=parts.filter(p=>p.life>0);
+    if(t<end||parts.length){requestAnimationFrame(loop);}else{cv.style.display='none';ctx.globalAlpha=1;}}
+  requestAnimationFrame(loop);}
+
+// ---- 効果音（Web Audio）----
+let AC=null;
+function ac(){try{if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();}catch(e){}return AC;}
+function tone(freq,start,dur,type,vol){const c=ac();if(!c)return;const t=c.currentTime+start;const os=c.createOscillator(),g=c.createGain();os.type=type||'sine';os.frequency.value=freq;os.connect(g);g.connect(c.destination);g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(vol||0.2,t+0.012);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);os.start(t);os.stop(t+dur+0.03);}
+function sfxCorrect(){tone(784,0,0.12,'triangle',0.22);tone(1175,0.10,0.20,'triangle',0.20);}
+function sfxComplete(){[523,659,784,1047].forEach((ff,i)=>tone(ff,i*0.12,0.24,'triangle',0.2));}
+function sfxFirework(){const c=ac();if(!c)return;const t=c.currentTime;
+  const os=c.createOscillator(),g=c.createGain();os.type='sine';os.frequency.setValueAtTime(420,t);os.frequency.exponentialRampToValueAtTime(1200,t+0.22);g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.10,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+0.28);os.connect(g);g.connect(c.destination);os.start(t);os.stop(t+0.30);
+  const dur=0.25,buf=c.createBuffer(1,Math.max(1,(c.sampleRate*dur)|0),c.sampleRate),dd=buf.getChannelData(0);for(let i=0;i<dd.length;i++){dd[i]=(Math.random()*2-1)*Math.pow(1-i/dd.length,2);}
+  const n=c.createBufferSource();n.buffer=buf;const ng=c.createGain();ng.gain.setValueAtTime(0.0001,t+0.22);ng.gain.linearRampToValueAtTime(0.3,t+0.25);ng.gain.exponentialRampToValueAtTime(0.0001,t+0.5);n.connect(ng);ng.connect(c.destination);n.start(t+0.22);n.stop(t+0.52);}
+['pointerdown','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,()=>{ac();},{once:true}));
+buildThemes();applyTheme(THEMES[0]);updatePoints();
+
 setMode("study");
 </script>
 </body>
