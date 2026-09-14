@@ -439,7 +439,7 @@ body.mode-study #marker{display:none!important;}
   </div>
 
   <div class="card themecard"><div class="tt">🎨 マップの<ruby>色<rt>いろ</rt></ruby>（ポイントでふえる）</div><div class="themes" id="themes"></div></div>
-  <p class="note">音声は Chrome / Safari 対応（プレビューでマイクが出ないときはダウンロードして開いてね）。地図データ © Geolonia（MIT）／ 都道府県は全 47。</p>
+  <p class="note">音声：Android・PC（Chrome）は🎤ボタン、iPhoneはキーボードの🎤ボタンで話せます。地図データ © Geolonia（MIT）／ 都道府県は全 47。</p>
 </div>
 
 <canvas id="fx"></canvas><div id="toast" class="toast"></div>
@@ -570,7 +570,8 @@ function reveal(){if(answered)return;answered=true;const d=BY[order[idx]];window
 function advance(){idx++;nextQuestion();}
 function submit(){if(answered)return;const v=ans.value.trim();if(!v){ans.focus();return;}judge(v,BY[order[idx]])?correct():wrong();}
 submitBtn.onclick=submit;nextBtn.onclick=()=>{clearTimeout(window._adv);advance();};hintBtn.onclick=showHint;revealBtn.onclick=reveal;
-ans.addEventListener('keydown',e=>{if(e.key==="Enter"&&!e.isComposing){e.preventDefault();submit();}});
+ans.addEventListener('keydown',e=>{if(e.key==="Enter"&&!e.isComposing){e.preventDefault();if(answered){clearTimeout(window._adv);advance();}else submit();}});
+document.addEventListener('keydown',e=>{if(e.key==="Enter"&&!e.isComposing&&mode==="quiz"&&answered&&e.target!==ans){e.preventDefault();clearTimeout(window._adv);advance();}});
 function showSummary(){document.getElementById('quizcard').hidden=true;const s=document.getElementById('summary');s.hidden=false;
   document.getElementById('barfill').style.width="100%";document.getElementById('count').innerHTML=order.length+" / "+order.length+" <ruby>問<rt>もん</rt></ruby>";
   document.getElementById('finalscore').textContent=okN+" / "+order.length;const rate=order.length?okN/order.length:0;
@@ -583,7 +584,9 @@ document.getElementById('onlymiss').onclick=()=>startRound(curFilter,(window._m|
 
 // ---- 音声 ----
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;const mic=document.getElementById('mic');
-if(!SR){mic.disabled=true;mic.title="この端末では音声が使えません";mic.style.opacity=.45;}
+const isIOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+if(isIOS){mic.title="キーボードのマイクで話せます";mic.onclick=()=>{if(answered)return;ans.focus();fb.className="feedback";fb.innerHTML="キーボードの 🎤 ボタンを おして "+R("話","はな")+"してね（iPhone）";};}
+else if(!SR){mic.disabled=true;mic.title="この端末では音声が使えません";mic.style.opacity=.45;}
 else{
   let rec=null,listening=false,micReady=false,micStream=null;
   function buildRec(){rec=new SR();rec.lang="ja-JP";rec.interimResults=false;rec.maxAlternatives=5;
